@@ -11,6 +11,12 @@ const nextConfig = {
         permanent: false,
         basePath: false,
       },
+      {
+        source: "/planets",
+        destination: "https://planets-gamma-beryl.vercel.app/",
+        permanent: false,
+        basePath: false,
+      },
     ];
   },
 };

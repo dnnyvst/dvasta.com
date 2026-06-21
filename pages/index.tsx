@@ -31,11 +31,11 @@ export default function Home() {
             with on my own time <i>(Github to be updated soon)</i>:
             <ul>
               <li>
-                Latest <a href="https://react.dev/">React</a> updates
+                latest <a href="https://react.dev/">React</a> updates
               </li>
               <li>
                 <a href="https://nextjs.org/" target="_blank">
-                  Next.js
+                  next.js
                 </a>
               </li>
               <li>
@@ -47,12 +47,12 @@ export default function Home() {
                   href="https://docs.pmnd.rs/react-three-fiber/getting-started/introduction"
                   target="_blank"
                 >
-                  React Three Fiber
+                  react-three-fiber
                 </a>
               </li>
-              <li>AI / machine learning</li>
+              <li>ai / machine learning</li>
               <li>
-                Twitch Chat game / side project using{" "}
+                Twitch chat game / side project using{" "}
                 <a href="https://www.npmjs.com/package/tmi.js">tmi.js</a>
               </li>
             </ul>

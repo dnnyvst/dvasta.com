@@ -12,7 +12,7 @@ export default function Home() {
         <section className="twoSecondFadeIn">
           <section className={utilStyles.headingMd}>
             <p>
-              Hi there, my name is <strong>Danny</strong>! I'm a Software
+              hi there, my name is <strong>Danny</strong>! i'm a Software
               Engineer
               <i>
                 {" "}
@@ -20,14 +20,14 @@ export default function Home() {
                 <a href="https://www.chewy.com/">Chewy</a>!){" "}
               </i>
               with <span className="greenText">6+ years of experience</span> and
-              a passion for frontend/web development technologies. I am
-              experienced with React, Redux, Javascript/Typescript and frontend
-              architecture design efforts.
+              a passion for frontend/web development technologies. i am
+              experienced with React, Redux, Next.js, Javascript/Typescript and
+              frontend architecture design efforts.
             </p>
           </section>
           <hr />
           <section>
-            Some things I'm currently interested in, learning and experimenting
+            some things I'm currently interested in, learning and experimenting
             with on my own time <i>(Github to be updated soon)</i>:
             <ul>
               <li>

@@ -16,9 +16,14 @@ export const Header = () => {
   return (
     <header className="sticky top-0 grid grid-cols-3 py-4 bg-background">
       <span className="justify-self-start">
-        {currentPath === "/"
-          ? "danny vasta"
-          : pages.find((page) => page.path === currentPath)?.label}
+        {currentPath === "/" ? (
+          <>
+            <span className="hidden md:inline">danny vasta</span>
+            <span className="md:hidden">dv</span>
+          </>
+        ) : (
+          pages.find((page) => page.path === currentPath)?.label
+        )}
       </span>
       <nav className="flex justify-center gap-4 whitespace-nowrap justify-self-center">
         {pages.map(({ path, label }) => (

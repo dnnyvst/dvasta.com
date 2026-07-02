@@ -1,31 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { TbSun, TbMoonStars } from "react-icons/tb";
 
 export const ThemeToggle = () => {
-  const [dark, setDark] = useState(false);
+  const toggle = () => {
+    const root = document.documentElement;
+    const isDark = root.classList.toggle("dark");
 
-  useEffect(() => {
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)",
-    ).matches;
+    document.cookie = `theme=${isDark ? "dark" : "light"}; path=/; max-age=31536000`;
+  };
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setDark(prefersDark);
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", dark);
-  }, [dark]);
-
-  const Icon = dark ? TbSun : TbMoonStars;
+  const isDark =
+    typeof document !== "undefined" &&
+    document.documentElement.classList.contains("dark");
 
   return (
-    <Icon
-      className="cursor-pointer"
-      size={24}
-      onClick={() => setDark((dark) => !dark)}
-    />
+    <button onClick={toggle} className="cursor-pointer">
+      {isDark ? <TbSun size={24} /> : <TbMoonStars size={24} />}
+    </button>
   );
 };

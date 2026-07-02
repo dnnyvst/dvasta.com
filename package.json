@@ -1,32 +1,29 @@
 {
-  "name": "learn-starter",
+  "name": "personal-site-2",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "pretty": "prettier --write \"./**/*.{js,jsx,ts,tsx,json}\""
+    "lint": "eslint"
   },
   "dependencies": {
-    "@react-pdf/renderer": "^3.1.12",
-    "@vercel/analytics": "^1.0.1",
-    "date-fns": "^2.30.0",
-    "gray-matter": "^4.0.3",
-    "next": "^14.2.14",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "remark": "^14.0.3",
-    "remark-html": "^15.0.2"
-  },
-  "engines": {
-    "node": "24.x"
+    "next": "16.2.9",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "react-icons": "^5.6.0"
   },
   "devDependencies": {
-    "@types/node": "20.5.1",
-    "@types/react": "18.2.20",
-    "eslint-config-next": "^14.2.14",
-    "prettier": "3.0.0",
-    "typescript": "^5.1.6"
+    "@tailwindcss/postcss": "^4.3.1",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10.5.2",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.9",
+    "postcss": "^8.5.16",
+    "tailwindcss": "^4.3.1",
+    "typescript": "^5"
   }
 }

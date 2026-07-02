@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+:root {
+  /* --background: #cfc8bb;
+  --foreground: #141310; */
+  --background: #e8e6dc;
+  --foreground: #0f0f0e;
+
+  --card-background: #faf9f5;
+}
+
+.dark {
+  --background: #0f0f0e;
+  /* --foreground: #e8e6dc; */
+  --foreground: #cfc8bb;
+
+  --card-background: #141413;
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card-background: var(--card-background);
+}
+
+@layer base {
+  body {
+    background: var(--background);
+    color: var(--foreground);
+  }
+
+  a {
+    @apply font-mono text-base;
+
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  a:hover {
+    font-style: italic;
+  }
+}
+
+@layer components {
+  .card {
+    @apply px-4 py-2 border rounded-md border-foreground/0 bg-card-background;
+  }
+}
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f0f0e;
+    --foreground: #e8e6dc;
+  }
+} */
+
+/* FORCE class-based dark mode */
+@custom-variant dark (&:where(.dark, .dark *));

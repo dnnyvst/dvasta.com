@@ -154,11 +154,11 @@ export default function Home() {
       by doing&quot;. over the years i have refined, practiced, and learned new
       skills by building things that interest me */}
 
-      <aside className="w-1/5 card h-min">
+      <aside className="w-1/5 h-min">
         <ul className="flex flex-col gap-2">
           {PROJECTS.map((project) => (
             <li
-              className={`hover:cursor-pointer hover:border-background card ${selectedProjectId === project.id ? "bg-background" : ""}`}
+              className={`hover:cursor-pointer hover:bg-card-background card ${selectedProjectId !== project.id ? "bg-background" : ""}`}
               key={project.id}
               onClick={() => setSelectedProjectId(project.id)}
             >

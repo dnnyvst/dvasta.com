@@ -1,79 +1,34 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { IoDocumentTextOutline } from "react-icons/io5";
-import { HiOutlineMail } from "react-icons/hi";
+import { SideNav } from "@/components";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center self-center max-w-3xl gap-4">
-      <header>
+    <div className="flex w-full h-full gap-4">
+      <SideNav />
+      <main className="flex flex-col flex-1 gap-4 shadow-md card">
         <Image
           priority
           src="/profile.jpg"
-          className="w-full mb-4 border rounded-md border-foreground/70 dark:border-card-background"
-          height={237}
-          width={237}
+          className="mb-4 rounded-md"
+          height={144}
+          width={144}
           alt="a photo of danny vasta"
         />
-        <h1 className="text-4xl">danny vasta</h1>
-        <span className="text-sm">
-          fullstack engineer at{" "}
-          <Link
-            className="text-sm"
-            href="https://www.chewy.com/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Chewy
-          </Link>
-        </span>
-      </header>
-      {/* social links */}
-      <nav
-        className="flex justify-center gap-4 pt-2 pb-4"
-        aria-label="Social links"
-      >
-        <Link
-          href="https://www.linkedin.com/in/daniel-vasta/"
-          target="_blank"
-          rel="noreferrer"
-          aria-label="GitHub profile"
-        >
-          <FaLinkedin size={24} />
-        </Link>
-        <Link
-          href="https://github.com/dnnyvst"
-          target="_blank"
-          rel="noreferrer"
-          aria-label="LinkedIn profile"
-        >
-          <FaGithub size={24} />
-        </Link>
-        <Link
-          href="mailto:djv711@gmail.com"
-          target="_blank"
-          rel="noreferrer"
-          aria-label="mail to dvv711@gmail.som"
-        >
-          <HiOutlineMail size={24} />
-        </Link>
-        <Link
-          href="/resume.pdf"
-          target="_blank"
-          rel="noreferrer"
-          aria-label="resume pdf"
-        >
-          <IoDocumentTextOutline size={24} />
-        </Link>
-      </nav>
-      {/* main content */}
-      <section className="flex flex-col flex-1 gap-4">
         <p>
-          hi there, my name is Danny! i&apos;m a Software Engineer with 6+ years
+          hi there, my name is Danny! i&apos;m a Software Engineer with 7+ years
           of experience and a passion for frontend/web development technologies.
           i am experienced with react, next.js, typescript, and frontend
           architecture / component-driven-design efforts.
+        </p>
+        <p>
+          i am currently a frontend / fullstack engineer at{" "}
+          <Link href="https://www.chewy.com/" target="_blank" rel="noreferrer">
+            Chewy
+          </Link>{" "}
+          on the Sponsored Ads team.
         </p>
         <hr className="my-4" />
         <p>
@@ -121,7 +76,7 @@ export default function Home() {
         <p>
           check out the <Link href="/projects">projects page</Link> to see more!
         </p>
-      </section>
+      </main>
     </div>
   );
 }

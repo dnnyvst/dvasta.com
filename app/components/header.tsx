@@ -7,25 +7,26 @@ import { usePathname } from "next/navigation";
 const pages = [
   { path: "/", label: "home" },
   { path: "/projects", label: "projects" },
-  // { path: "/contact", label: "contact me" },
 ];
 
 export const Header = () => {
   const currentPath = usePathname();
 
   return (
-    <header className="sticky top-0 grid w-full grid-cols-3 px-2 py-4 bg-background z-99">
-      <span className="justify-self-start">
-        {currentPath === "/" ? (
+    <header className="sticky top-0 flex justify-between w-1/5 px-2 py-4 mr-auto bg-background z-99">
+      <span>
+        {/* {currentPath === "/" ? (
           <>
             <span className="hidden md:inline">danny vasta</span>
             <span className="md:hidden">dv</span>
           </>
         ) : (
           pages.find((page) => page.path === currentPath)?.label
-        )}
+        )} */}
+        <span className="hidden md:inline">danny vasta</span>
+        <span className="md:hidden">dv</span>
       </span>
-      <nav className="flex justify-center gap-4 whitespace-nowrap justify-self-center">
+      {/* <nav className="flex justify-center gap-4 whitespace-nowrap justify-self-center">
         {pages.map(({ path, label }) => (
           <span key={path}>
             {path === currentPath ? (
@@ -35,10 +36,8 @@ export const Header = () => {
             )}
           </span>
         ))}
-      </nav>
-      <span className="justify-self-end">
-        <ThemeToggle />
-      </span>
+      </nav> */}
+      <ThemeToggle />
     </header>
   );
 };

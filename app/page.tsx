@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex flex-col flex-1 w-full h-full gap-4 overflow-y-scroll shadow-md card scrollbar-thin">
+    <main className="flex flex-col flex-1 w-full h-full gap-4 overflow-y-scroll scrollbar-thin">
       <Image
         priority
         src="/profile.jpg"
@@ -27,8 +27,7 @@ export default function Home() {
         </Link>{" "}
         on the Sponsored Ads team.
       </p>
-      <hr className="my-4" />
-      <p>
+      <p className="pt-4">
         some things i&apos;m currently interested in, learning, or experimenting
         with:
       </p>

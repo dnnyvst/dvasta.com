@@ -13,7 +13,7 @@ export const SideNav = () => {
   const currentPath = usePathname();
 
   return (
-    <aside className="hidden w-1/5 bg-background sm:block">
+    <aside className="hidden w-1/5 pr-4 border-r border-foreground/30 bg-background sm:block">
       <ul className="flex flex-col gap-2">
         {/* <span className="flex justify-between pb-16">
           <span className="hidden md:inline">danny vasta</span>
@@ -34,7 +34,7 @@ export const SideNav = () => {
         <li className="hidden py-2 lg:inline">
           <SocialIcons />
         </li>
-        <hr className="hidden pb-2 lg:inline" />
+        <hr className="hidden pb-2 lg:inline opacity-30" />
 
         {pages.map(({ path, label }) => (
           <Link

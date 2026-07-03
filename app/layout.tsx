@@ -30,7 +30,7 @@ export default function RootLayout({
     >
       <body className="h-screen pb-4 overflow-hidden font-mono bg-background text-foreground">
         {/* <div className="fixed top-0 w-px h-screen -translate-x-1/2 bg-red-500 pointer-events-none z-999 left-1/2" /> */}
-        <div className="flex flex-col items-center h-full px-12 mx-auto sm:px-12 md:px-0 md:w-3/4">
+        <div className="flex flex-col items-center h-full px-4 mx-auto sm:px-12 md:px-0 md:w-3/4">
           <Header />
           <div className="flex flex-1 w-full min-h-0 gap-4">
             <SideNav />

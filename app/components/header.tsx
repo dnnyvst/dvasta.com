@@ -10,11 +10,11 @@ const pages = [
 ];
 
 export const Header = () => {
-  const currentPath = usePathname();
+  // const currentPath = usePathname();
 
   return (
     <header className="relative sticky top-0 z-40 flex items-center w-full gap-4 px-2 py-4 bg-background lg:px-0">
-      <span className="flex w-1/5 gap-4">
+      <span className="flex items-center w-1/5 gap-2">
         {/* {currentPath === "/" ? (
           <>
             <span className="hidden md:inline">danny vasta</span>

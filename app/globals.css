@@ -46,7 +46,7 @@
 
 @layer components {
   .card {
-    @apply px-4 py-2 border rounded-md border-foreground/0 bg-card-background;
+    @apply px-2 py-2 border rounded-md border-foreground/0 bg-card-background;
   }
 }
 

@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, type ReactNode } from "react";
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
 import { LuScreenShare } from "react-icons/lu";
@@ -9,10 +12,20 @@ import { LuScreenShare } from "react-icons/lu";
 //   "tmi.js": "border border-[#9147ff]",
 // };
 
-const PROJECTS = [
+type Project = {
+  id: string;
+  name: string;
+  repoHref: string;
+  liveHref?: string;
+  technologies?: string[];
+  year: string;
+  description: ReactNode;
+};
+
+const PROJECTS: Project[] = [
   {
     id: "space",
-    name: "space",
+    name: "space model viewer",
     repoHref: "https://github.com/dnnyvst/space",
     liveHref: "/space",
     technologies: ["next.js", "three.js", "react-three-fiber"],
@@ -39,7 +52,7 @@ const PROJECTS = [
   },
   {
     id: "pomo",
-    name: "pomo",
+    name: "pomodoro timer",
     repoHref: "https://github.com/dnnyvst/pomodoro-app",
     liveHref: "/focus",
     technologies: ["next.js"],
@@ -130,16 +143,32 @@ const PROJECTS = [
 ];
 
 export default function Home() {
+  const [selectedProjectId, setSelectedProjectId] = useState<string>("space");
+
+  const { name, liveHref, repoHref, description, year } =
+    PROJECTS.find((project) => project.id === selectedProjectId) || {};
+
   return (
-    <div className="flex flex-col items-center max-w-3xl gap-4">
+    <div className="flex w-full h-full gap-4">
       {/* most of these projects started off with the intent of just &quot;learning
       by doing&quot;. over the years i have refined, practiced, and learned new
       skills by building things that interest me */}
-      {PROJECTS.map(({ id, name, liveHref, repoHref, description, year }) => (
-        <div
-          className="relative flex flex-col w-full gap-4 shadow-md card"
-          key={id}
-        >
+
+      <aside className="w-1/5 card h-min">
+        <ul className="flex flex-col gap-2">
+          {PROJECTS.map((project) => (
+            <li
+              className={`hover:cursor-pointer hover:border-background card ${selectedProjectId === project.id ? "bg-background" : ""}`}
+              key={project.id}
+              onClick={() => setSelectedProjectId(project.id)}
+            >
+              {project.name}
+            </li>
+          ))}
+        </ul>
+      </aside>
+      <main className="flex flex-col flex-1 gap-4 overflow-y-scroll scrollbar-thin">
+        <section className="relative flex flex-col flex-1 w-full gap-4 shadow-md card">
           <span className="absolute right-0 py-2 pr-4 text-xs opacity-60">
             {year}
           </span>
@@ -159,7 +188,7 @@ export default function Home() {
               </Link>
             )}
             <Link
-              href={repoHref}
+              href={repoHref as string}
               target="_blank"
               rel="noreferrer"
               aria-label="Github repo link"
@@ -183,8 +212,8 @@ export default function Home() {
               </li>
             ))}
           </ul> */}
-        </div>
-      ))}
+        </section>
+      </main>
     </div>
   );
 }

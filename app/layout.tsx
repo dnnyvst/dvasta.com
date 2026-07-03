@@ -28,10 +28,14 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-screen px-4 pb-4 font-mono bg-background text-foreground">
+      <body className="h-screen pb-4 overflow-hidden font-mono bg-background text-foreground">
         {/* <div className="fixed top-0 w-px h-screen -translate-x-1/2 bg-red-500 pointer-events-none z-999 left-1/2" /> */}
-        <Header />
-        <main className="flex justify-center">{children}</main>
+        <div className="flex flex-col items-center w-3/4 h-full mx-auto">
+          <Header />
+          <main className="flex justify-center flex-1 min-w-full min-h-0">
+            {children}
+          </main>
+        </div>
       </body>
     </html>
   );

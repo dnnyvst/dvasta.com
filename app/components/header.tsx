@@ -14,7 +14,7 @@ export const Header = () => {
   const currentPath = usePathname();
 
   return (
-    <header className="sticky top-0 grid grid-cols-3 py-4 bg-background z-99">
+    <header className="sticky top-0 grid w-full grid-cols-3 px-4 py-4 bg-background z-99">
       <span className="justify-self-start">
         {currentPath === "/" ? (
           <>

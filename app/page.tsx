@@ -6,7 +6,7 @@ import { HiOutlineMail } from "react-icons/hi";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center flex-1 gap-4">
+    <div className="flex flex-col items-center self-center max-w-3xl gap-4">
       <header>
         <Image
           priority

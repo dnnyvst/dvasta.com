@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
-import { CgWebsite } from "react-icons/cg";
 import { LuScreenShare } from "react-icons/lu";
 
 // const PILL_COLORS = {
@@ -132,7 +131,7 @@ const PROJECTS = [
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center flex-1 gap-4">
+    <div className="flex flex-col items-center max-w-3xl gap-4">
       {/* most of these projects started off with the intent of just &quot;learning
       by doing&quot;. over the years i have refined, practiced, and learned new
       skills by building things that interest me */}

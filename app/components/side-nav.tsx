@@ -13,14 +13,14 @@ export const SideNav = () => {
   const currentPath = usePathname();
 
   return (
-    <aside className="w-1/5 card bg-background">
+    <aside className="w-1/5 bg-background">
       <ul className="flex flex-col gap-2">
         {/* <span className="flex justify-between pb-16">
           <span className="hidden md:inline">danny vasta</span>
           <span className="md:hidden">dv</span>
           <ThemeToggle />
         </span> */}
-        <li className="text-sm">
+        <li className="hidden text-sm lg:inline">
           frontend / fullstack engineer at{" "}
           <Link
             className="text-sm"
@@ -31,10 +31,10 @@ export const SideNav = () => {
             Chewy
           </Link>
         </li>
-        <li className="py-2">
+        <li className="hidden py-2 lg:inline">
           <SocialIcons />
         </li>
-        <hr className="pb-2" />
+        <hr className="hidden pb-2 lg:inline" />
 
         {pages.map(({ path, label }) => (
           <Link

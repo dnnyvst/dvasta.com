@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ThemeToggle } from "@/components";
+import { SocialIcons, ThemeToggle } from "@/components";
 import { usePathname } from "next/navigation";
 
 const pages = [
@@ -13,8 +13,8 @@ export const Header = () => {
   const currentPath = usePathname();
 
   return (
-    <header className="sticky top-0 flex justify-between w-full px-2 py-4 mr-auto bg-background z-99">
-      <span>
+    <header className="sticky top-0 flex items-center w-full py-4 bg-background z-99">
+      <span className="w-1/5">
         {/* {currentPath === "/" ? (
           <>
             <span className="hidden md:inline">danny vasta</span>
@@ -26,6 +26,7 @@ export const Header = () => {
         <span className="hidden md:inline">danny vasta</span>
         <span className="md:hidden">dv</span>
       </span>
+
       {/* <nav className="flex justify-center gap-4 whitespace-nowrap justify-self-center">
         {pages.map(({ path, label }) => (
           <span key={path}>
@@ -37,8 +38,13 @@ export const Header = () => {
           </span>
         ))}
       </nav> */}
-      <span className="ml-auto">
-        <ThemeToggle />
+      <span className="flex flex-1">
+        <span className="inline lg:hidden">
+          <SocialIcons />
+        </span>
+        <span className="ml-auto">
+          <ThemeToggle />
+        </span>
       </span>
     </header>
   );

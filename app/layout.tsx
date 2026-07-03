@@ -32,7 +32,7 @@ export default function RootLayout({
         {/* <div className="fixed top-0 w-px h-screen -translate-x-1/2 bg-red-500 pointer-events-none z-999 left-1/2" /> */}
         <div className="flex flex-col items-center w-3/4 h-full mx-auto">
           <Header />
-          <main className="flex justify-center flex-1 min-w-full min-h-0">
+          <main className="flex flex-1 w-full min-h-0 gap-4">
             <SideNav />
             {children}
           </main>

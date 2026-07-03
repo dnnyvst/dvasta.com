@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { SocialIcons, ThemeToggle } from "@/components";
+import { HeaderNavMenu, SocialIcons, ThemeToggle } from "@/components";
 import { usePathname } from "next/navigation";
 
 const pages = [
@@ -13,8 +13,8 @@ export const Header = () => {
   const currentPath = usePathname();
 
   return (
-    <header className="sticky top-0 flex items-center w-full py-4 bg-background z-99">
-      <span className="w-1/5">
+    <header className="relative sticky top-0 z-40 flex items-center w-full gap-4 px-2 py-4 bg-background lg:px-0">
+      <span className="flex w-1/5 gap-4">
         {/* {currentPath === "/" ? (
           <>
             <span className="hidden md:inline">danny vasta</span>
@@ -25,6 +25,7 @@ export const Header = () => {
         )} */}
         <span className="hidden md:inline">danny vasta</span>
         <span className="md:hidden">dv</span>
+        <HeaderNavMenu />
       </span>
 
       {/* <nav className="flex justify-center gap-4 whitespace-nowrap justify-self-center">
@@ -38,13 +39,11 @@ export const Header = () => {
           </span>
         ))}
       </nav> */}
-      <span className="flex flex-1">
-        <span className="inline lg:hidden">
-          <SocialIcons />
-        </span>
-        <span className="ml-auto">
-          <ThemeToggle />
-        </span>
+      <span className="absolute -translate-x-1/2 sm:static sm:translate-x-0 sm:left-auto left-1/2 lg:hidden">
+        <SocialIcons />
+      </span>
+      <span className="ml-auto">
+        <ThemeToggle />
       </span>
     </header>
   );

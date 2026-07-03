@@ -13,7 +13,7 @@ export const SideNav = () => {
   const currentPath = usePathname();
 
   return (
-    <aside className="w-1/5 bg-background">
+    <aside className="hidden w-1/5 bg-background sm:block">
       <ul className="flex flex-col gap-2">
         {/* <span className="flex justify-between pb-16">
           <span className="hidden md:inline">danny vasta</span>

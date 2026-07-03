@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
 import { LuScreenShare } from "react-icons/lu";
-import { SideNav } from "@/components";
 
 // const PILL_COLORS = {
 //   "next.js": "bg-card-background border border-foreground",
@@ -167,7 +166,6 @@ export default function Home() {
           ))}
         </ul>
       </aside> */}
-      <SideNav />
       <main className="flex flex-col flex-1 gap-4 overflow-y-scroll scrollbar-thin">
         {PROJECTS.map(({ id, name, liveHref, repoHref, description, year }) => (
           <section

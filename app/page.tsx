@@ -2,12 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { SideNav } from "@/components";
 
 export default function Home() {
   return (
     <div className="flex w-full h-full gap-4">
-      <SideNav />
       <main className="flex flex-col flex-1 gap-4 shadow-md card">
         <Image
           priority

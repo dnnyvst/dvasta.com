@@ -31,8 +31,11 @@ export const SideNav = () => {
             Chewy
           </Link>
         </li>
-        <SocialIcons />
-        <hr />
+        <li className="py-2">
+          <SocialIcons />
+        </li>
+        <hr className="pb-2" />
+
         {pages.map(({ path, label }) => (
           <Link
             key={path}

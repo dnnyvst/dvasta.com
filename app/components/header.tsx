@@ -13,7 +13,7 @@ export const Header = () => {
   const currentPath = usePathname();
 
   return (
-    <header className="sticky top-0 flex justify-between w-1/5 px-2 py-4 mr-auto bg-background z-99">
+    <header className="sticky top-0 flex justify-between w-full px-2 py-4 mr-auto bg-background z-99">
       <span>
         {/* {currentPath === "/" ? (
           <>
@@ -37,7 +37,9 @@ export const Header = () => {
           </span>
         ))}
       </nav> */}
-      <ThemeToggle />
+      <span className="ml-auto">
+        <ThemeToggle />
+      </span>
     </header>
   );
 };

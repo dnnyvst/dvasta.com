@@ -32,7 +32,7 @@ export default function RootLayout({
       <body className="relative h-screen overflow-hidden font-mono bg-background text-foreground">
         <div id="ui-overlay" className="flex flex-col h-full gap-8 p-8">
           <Header />
-          <main id="content" className="flex items-center flex-1 h-full gap-8">
+          <main id="content" className="flex items-end flex-1 h-full gap-8 ">
             {children}
           </main>
         </div>

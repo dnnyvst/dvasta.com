@@ -4,7 +4,7 @@ import { ARTICLES } from "@/constants";
 
 const Home = () => (
   <>
-    <aside className="flex flex-col w-64 gap-8">
+    <aside className="flex flex-col w-64 gap-8 pb-16">
       {ARTICLES.map(({ title, content }) => (
         <article key={title}>
           <h2>{title}</h2>

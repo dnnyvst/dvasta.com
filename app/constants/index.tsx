@@ -132,7 +132,7 @@ export const PROJECTS: Project[] = [
   },
 ];
 
-type Article = {
+export type Article = {
   title: string;
   content: ReactNode;
 };

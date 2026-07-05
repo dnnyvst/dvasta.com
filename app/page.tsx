@@ -1,17 +1,11 @@
 "use client";
 
-import { ARTICLES } from "@/constants";
+import { type FC } from "react";
+import { Aside } from "@/components";
 
-const Home = () => (
+const Home: FC = () => (
   <>
-    <aside className="flex flex-col w-64 gap-8 pb-16">
-      {ARTICLES.map(({ title, content }) => (
-        <article key={title}>
-          <h2>{title}</h2>
-          <section className="flex flex-col gap-2">{content}</section>
-        </article>
-      ))}
-    </aside>
+    <Aside />;
     {/* <section className="flex-1 h-full bg-blue-500">main</section> */}
   </>
 );

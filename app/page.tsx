@@ -5,7 +5,7 @@ import { Aside } from "@/components";
 
 const Home: FC = () => (
   <>
-    <Aside />;
+    <Aside />
     {/* <section className="flex-1 h-full bg-blue-500">main</section> */}
   </>
 );

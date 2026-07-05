@@ -29,14 +29,10 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="h-screen overflow-hidden font-mono bg-background text-foreground">
-        {/* <div className="fixed top-0 w-px h-screen -translate-x-1/2 bg-red-500 pointer-events-none z-999 left-1/2" /> */}
-        <div className="fixed right-0 p-8 w-min">
-          <ThemeToggle />
-        </div>
-        <div className="flex flex-col justify-center w-3/4 h-full gap-4 mx-auto">
+      <body className="relative h-screen p-8 overflow-hidden font-mono bg-background text-foreground">
+        <div className="flex flex-col h-full gap-4">
           <Header />
-          {children}
+          <div className="flex-1 min-h-0">{children}</div>
         </div>
       </body>
     </html>

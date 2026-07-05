@@ -101,7 +101,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: "twitch-chat",
-    name: "Twitch chat guess-the-word game",
+    name: "Twitch chat guess-the-word",
     repoHref: "https://github.com/dnnyvst/twitch-chat-guessing-game",
     year: "2024",
     technologies: ["tmi.js"],

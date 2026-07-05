@@ -1,12 +1,12 @@
 "use client";
 
-import { type ReactNode } from "react";
+import { type FC } from "react";
 import Link from "next/link";
 import { PROJECTS } from "@/constants";
 import { FaGithub } from "react-icons/fa";
 import { LuScreenShare } from "react-icons/lu";
 
-export default function Home() {
+const Projects: FC = () => {
   // const [selectedProjectId, setSelectedProjectId] = useState<string>("space");
 
   // const { name, liveHref, repoHref, description, year } =
@@ -56,7 +56,9 @@ export default function Home() {
       ))}
     </main>
   );
-}
+};
+
+export default Projects;
 
 {
   /* most of these projects started off with the intent of just &quot;learning

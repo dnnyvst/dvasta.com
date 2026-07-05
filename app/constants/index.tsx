@@ -2,7 +2,7 @@ import { type ReactNode } from "react";
 import Link from "next/link";
 import { SocialIcons } from "@/components";
 
-type Project = {
+export type Project = {
   id: string;
   name: string;
   repoHref: string;
@@ -74,7 +74,7 @@ export const PROJECTS: Project[] = [
     ),
   },
   {
-    id: "douyu",
+    id: "douyu-vod-browser",
     name: "Douyu VOD browser",
     repoHref: "https://github.com/dnnyvst/douyu-for-dummies",
     liveHref: "https://www.douyufordummies.com/",
@@ -101,7 +101,7 @@ export const PROJECTS: Project[] = [
     ),
   },
   {
-    id: "twitch-chat",
+    id: "twitch-chat-guess-the-word",
     name: "Twitch chat guess-the-word",
     repoHref: "https://github.com/dnnyvst/twitch-chat-guessing-game",
     year: "2024",
@@ -124,7 +124,7 @@ export const PROJECTS: Project[] = [
     ),
   },
   {
-    id: "personal-site",
+    id: "this-website",
     name: "this website!",
     repoHref: "https://github.com/dnnyvst/personal-site",
     year: "2023, revamped 2026",
@@ -158,7 +158,9 @@ export const ARTICLES: Article[] = [
     content: (
       <ul>
         {PROJECTS.map(({ id, name }) => (
-          <li key={id}>{name}</li>
+          <li key={id}>
+            <Link href={`/projects/${id}`}>{name}</Link>
+          </li>
         ))}
       </ul>
     ),

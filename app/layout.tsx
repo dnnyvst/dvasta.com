@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Header, SideNav } from "@/components";
+import { Header, SideNav, ThemeToggle } from "@/components";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,16 +26,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="h-screen pb-4 overflow-hidden font-mono bg-background text-foreground">
+      <body className="h-screen overflow-hidden font-mono bg-background text-foreground">
         {/* <div className="fixed top-0 w-px h-screen -translate-x-1/2 bg-red-500 pointer-events-none z-999 left-1/2" /> */}
-        <div className="flex flex-col items-center h-full px-4 mx-auto sm:px-12 md:px-0 md:w-3/4">
+        <div className="fixed right-0 p-8 w-min">
+          <ThemeToggle />
+        </div>
+        <div className="flex flex-col justify-center w-3/4 h-full gap-4 mx-auto">
           <Header />
-          <div className="flex flex-1 w-full min-h-0 gap-4">
-            <SideNav />
-            {children}
-          </div>
+          {children}
         </div>
       </body>
     </html>

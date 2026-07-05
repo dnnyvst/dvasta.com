@@ -1,5 +1,6 @@
-import Link from "next/link";
 import { type ReactNode } from "react";
+import Link from "next/link";
+import { SocialIcons } from "@/components";
 
 type Project = {
   id: string;
@@ -128,5 +129,42 @@ export const PROJECTS: Project[] = [
     repoHref: "https://github.com/dnnyvst/personal-site",
     year: "2023, revamped 2026",
     description: "you're here!",
+  },
+];
+
+type Article = {
+  title: string;
+  content: ReactNode;
+};
+
+export const ARTICLES: Article[] = [
+  {
+    title: "me",
+    content: (
+      <>
+        <p>software engineer with 7+ years of experience.</p>
+        <p>
+          fullstack engineer at{" "}
+          <Link href="https://www.chewy.com/" target="_blank" rel="noreferrer">
+            Chewy
+          </Link>{" "}
+          on the Sponsored Ads team.
+        </p>
+      </>
+    ),
+  },
+  {
+    title: "projects",
+    content: (
+      <ul>
+        {PROJECTS.map(({ id, name }) => (
+          <li key={id}>{name}</li>
+        ))}
+      </ul>
+    ),
+  },
+  {
+    title: "links",
+    content: <SocialIcons />,
   },
 ];

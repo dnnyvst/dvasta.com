@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Header } from "@/components";
 import "./globals.css";
-import { Header, ThemeToggle } from "@/components";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,10 +29,12 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="relative h-screen p-8 overflow-hidden font-mono bg-background text-foreground">
-        <div className="flex flex-col h-full gap-4">
+      <body className="relative h-screen overflow-hidden font-mono bg-background text-foreground">
+        <div id="ui-overlay" className="flex flex-col h-full gap-8 p-8">
           <Header />
-          <div className="flex-1 min-h-0">{children}</div>
+          <main id="content" className="flex items-center flex-1 h-full gap-8">
+            {children}
+          </main>
         </div>
       </body>
     </html>

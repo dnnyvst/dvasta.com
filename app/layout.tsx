@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { Aside, Header } from "@/components";
+import { ThemeProvider } from "next-themes";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -36,13 +37,18 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${iwata.variable} h-full antialiased`}
     >
       <body className="relative h-screen overflow-hidden font-mono bg-background text-foreground">
-        <div id="ui-overlay" className="flex flex-col h-full px-[6vw] py-[6vh]">
-          <Header />
-          <main id="content" className="flex items-end h-full gap-8">
-            <Aside />
-            {children}
-          </main>
-        </div>
+        <ThemeProvider themes={["light", "dark", "beautiful-world"]}>
+          <div
+            id="ui-overlay"
+            className="flex flex-col h-full px-[6vw] py-[6vh]"
+          >
+            <Header />
+            <main id="content" className="flex items-end h-full gap-8">
+              <Aside />
+              {children}
+            </main>
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

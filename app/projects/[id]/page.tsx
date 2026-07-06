@@ -19,7 +19,7 @@ export default async function Project({ params }: ProjectProps) {
 
   return (
     <ModalOverlay>
-      <section className="relative flex flex-col h-full gap-4 shadow-lg card">
+      <section className="relative flex flex-col flex-1 gap-4 shadow-lg card">
         <span className="absolute right-0 py-2 pr-4 text-xs opacity-60">
           {year}
         </span>

@@ -20,7 +20,7 @@ export const ModalOverlay = ({ children }: { children: ReactNode }) => {
 export const Modal = ({ children }: { children: ReactNode }) => (
   <div
     id="modal"
-    className="z-50 w-full sm:w-5/6 md:w-3/4 lg:w-2/3 xl:w-1/2 h-min"
+    className="z-50 w-full sm:w-5/6 md:w-3/4 lg:w-2/3 xl:w-1/2 h-1/2"
     onClick={(e) => e.stopPropagation()}
   >
     {children}

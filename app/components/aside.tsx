@@ -11,7 +11,7 @@ const Article: FC<Article> = ({ title, content }) => (
 );
 
 export const Aside: FC = () => (
-  <aside className="z-40 flex flex-col w-64 gap-8 pb-16 pointer-events-none xl:z-50">
+  <aside className="z-40 flex flex-col w-64 gap-8 pb-24 pointer-events-none xl:z-50">
     {ARTICLES.map((article) => (
       <Article key={article.title} {...article} />
     ))}

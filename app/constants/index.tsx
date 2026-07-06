@@ -65,11 +65,13 @@ export const PROJECTS: Project[] = [
           </Link>{" "}
           which i used for many years and love dearly.
         </p>
-        this app aims to create a calm and practical atmosphere when studying or
-        working through different tasks. when the timer is running, the rest of
-        the ui melts away. i wanted to build something functional but also
-        capture an aesthetic that i enjoy a lot. be sure to check out the
-        &quot;long break&quot; screen.
+        <p>
+          this app aims to create a calm and practical atmosphere when studying
+          or working through different tasks. when the timer is running, the
+          rest of the ui melts away. i wanted to build something functional but
+          also capture an aesthetic that i enjoy a lot. be sure to check out the
+          &quot;long break&quot; screen.
+        </p>
       </>
     ),
   },

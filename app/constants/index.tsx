@@ -87,7 +87,7 @@ export const PROJECTS: Project[] = [
           a Douyu VOD browser to more easily track CN WoW streamers.
         </p>
         <p>
-          in the only World of Warcraft mythic+ scene, there are many amazing
+          in the online World of Warcraft mythic+ scene, there are many amazing
           players who stream on sites like Douyu, Huya, and Bilibili. it can be
           hard to find their streams / VODs for us Western folk, as even Google
           Translate doesn&apos;t make it obvious and you just kind of have to

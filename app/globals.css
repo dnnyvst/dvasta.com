@@ -38,6 +38,7 @@
     text-decoration: underline;
     text-underline-offset: 4px;
     font-weight: bold;
+    pointer-events: auto;
   }
 
   a:hover {

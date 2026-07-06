@@ -30,7 +30,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="relative h-screen overflow-hidden font-mono bg-background text-foreground">
-        <div id="ui-overlay" className="flex flex-col h-full gap-8 p-8">
+        <div id="ui-overlay" className="flex flex-col h-full px-[6vw] py-[6vh]">
           <Header />
           <main id="content" className="flex items-end h-full gap-8">
             <Aside />

@@ -9,7 +9,7 @@ export const ModalOverlay = ({ children }: { children: ReactNode }) => {
   return (
     <div
       id="modal-overlay"
-      className="fixed inset-0 z-40 flex justify-center px-8 pt-24 transition-all duration-300 ease-in-out xl:bg-transparent bg-black/70"
+      className="fixed inset-0 z-40 flex justify-center px-8 pt-[6vh] transition-all duration-300 ease-in-out xl:bg-transparent bg-black/70"
       onClick={() => push("/")}
     >
       <Modal>{children}</Modal>

@@ -23,7 +23,7 @@ export const ThemeToggle = () => {
 
   return (
     <Icon
-      className="cursor-pointer z-90"
+      className="z-40 cursor-pointer"
       size={24}
       onClick={() => setDark((dark) => !dark)}
     />

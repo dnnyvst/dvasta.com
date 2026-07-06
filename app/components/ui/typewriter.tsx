@@ -128,7 +128,7 @@ export const TypeWriter = () => {
         {THEME_TEXT[resolvedTheme]?.primary[themeTextIndex] || `danny vasta`}
       </h1>
       <p
-        className={`w-min whitespace-nowrap pr-1 ${deleted ? "opacity-0" : "opacity-50"}`}
+        className={`w-min whitespace-nowrap ${deleted ? "opacity-0" : "opacity-50"}`}
       >
         {THEME_TEXT[resolvedTheme]?.secondary?.[themeTextIndex] || ` `}
       </p>

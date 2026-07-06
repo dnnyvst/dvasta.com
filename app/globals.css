@@ -7,6 +7,9 @@
     --background: #e8e6dc;
     --foreground: #0f0f0e;
 
+    --highlight-bg: #0f0f0e;
+    --highlight-fg: #e8e6dc;
+
     --card-background: #faf9f5;
   }
   [data-theme="light"] {
@@ -15,6 +18,9 @@
     --background: #e8e6dc;
     --foreground: #0f0f0e;
 
+    --highlight-bg: #0f0f0e;
+    --highlight-fg: #e8e6dc;
+
     --card-background: #faf9f5;
   }
   [data-theme="dark"] {
@@ -22,11 +28,17 @@
     --background: #0f0f0e;
     --foreground: #cfc8bb;
 
+    --highlight-bg: #cfc8bb;
+    --highlight-fg: #0f0f0e;
+
     --card-background: #141413;
   }
   [data-theme="beautiful-world"] {
     --background: #237cde;
     --foreground: white;
+
+    --highlight-bg: white;
+    --highlight-fg: #237cde;
 
     --card-background: #6590d2;
   }
@@ -34,7 +46,16 @@
   [data-theme] {
     --color-background: var(--background);
     --color-foreground: var(--foreground);
+
+    --color-highlight-bg: var(--highlight-bg);
+    --color-highlight-fg: var(--highlight-fg);
+
     --color-card-background: var(--card-background);
+  }
+
+  ::selection {
+    background-color: var(--highlight-bg);
+    color: var(--highlight-fg);
   }
 
   body {
@@ -82,11 +103,19 @@
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  --color-highlight-bg: var(--highlight-bg);
+  --color-highlight-fg: var(--highlight-fg);
+
   --color-card-background: var(--card-background);
 }
 
 @layer components {
   .card {
     @apply px-4 py-2 border rounded-md border-foreground/0 bg-card-background;
+  }
+
+  .highlighted {
+    @apply bg-highlight-bg text-highlight-fg;
   }
 }

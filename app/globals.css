@@ -48,6 +48,7 @@
 
   h1 {
     @apply text-lg;
+    --font-weight: bold;
   }
 
   h2 {

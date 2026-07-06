@@ -3,3 +3,4 @@ export * from "./aside";
 export * from "./social-icons";
 export * from "./theme-toggle";
 export * from "./modal";
+export * from "./typewriter";

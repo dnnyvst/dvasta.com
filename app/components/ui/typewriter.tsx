@@ -42,16 +42,23 @@ export const TypeWriter = () => {
   const [mounted, setMounted] = useState<boolean>(false);
 
   const [showCursor, setShowCursor] = useState<boolean>(false);
-
   const [themeTextIndex, setThemeTextIndex] = useState<number>(0);
-
   const [highlighted, setHighlighted] = useState<boolean>(false);
   const [deleted, setDeleted] = useState<boolean>(false);
+  const [displayText, setDisplayText] = useState<string>("");
+  const [displayTextIndex, setDisplayTextIndex] = useState<number>(0);
 
   const timersRef = useRef<{
     deleted: ReturnType<typeof setTimeout> | null;
     newText: ReturnType<typeof setTimeout> | null;
   }>({ deleted: null, newText: null });
+
+  const currentThemeText =
+    THEME_TEXT[resolvedTheme || ""]?.primary[themeTextIndex];
+  const currentSecondaryThemeText =
+    displayText !== currentThemeText || deleted
+      ? ""
+      : THEME_TEXT[resolvedTheme || ""]?.secondary?.[themeTextIndex];
 
   useEffect(() => {
     setMounted(true);
@@ -105,6 +112,8 @@ export const TypeWriter = () => {
 
         setHighlighted(false);
         setDeleted(false);
+        setDisplayText("");
+        setDisplayTextIndex(0);
       }, 500);
     };
 
@@ -118,6 +127,26 @@ export const TypeWriter = () => {
     };
   }, [mounted, resolvedTheme]);
 
+  // typewriter
+  useEffect(() => {
+    const typeWriter = setTimeout(() => {
+      if (displayText === currentThemeText) {
+        setDisplayTextIndex(0);
+        setShowCursor(true);
+        return;
+      }
+      setShowCursor(false);
+      setDisplayText((displayText) => {
+        return displayText + currentThemeText[displayTextIndex];
+      });
+      setDisplayTextIndex((displayTextIndex) => {
+        return displayTextIndex + 1;
+      });
+    }, 50);
+
+    return () => clearTimeout(typeWriter);
+  }, [currentThemeText, displayText, displayTextIndex]);
+
   if (!mounted || !resolvedTheme) return null;
 
   return (
@@ -125,12 +154,10 @@ export const TypeWriter = () => {
       <h1
         className={`${showCursor && "border-r"} ${highlighted && "highlighted"} ${deleted && "opacity-0"}`}
       >
-        {THEME_TEXT[resolvedTheme]?.primary[themeTextIndex] || `danny vasta`}
+        {displayText}
       </h1>
-      <p
-        className={`w-min whitespace-nowrap ${deleted ? "opacity-0" : "opacity-50"}`}
-      >
-        {THEME_TEXT[resolvedTheme]?.secondary?.[themeTextIndex]}
+      <p className={`w-min whitespace-nowrap opacity-50`}>
+        {currentSecondaryThemeText}
       </p>
     </div>
   );

@@ -130,7 +130,7 @@ export const TypeWriter = () => {
       <p
         className={`w-min whitespace-nowrap ${deleted ? "opacity-0" : "opacity-50"}`}
       >
-        {THEME_TEXT[resolvedTheme]?.secondary?.[themeTextIndex] || ` `}
+        {THEME_TEXT[resolvedTheme]?.secondary?.[themeTextIndex]}
       </p>
     </div>
   );

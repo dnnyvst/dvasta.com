@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { Aside, Header } from "@/components";
 import "./globals.css";
 
@@ -11,6 +12,11 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const iwata = localFont({
+  src: "../public/iwata.otf",
+  variable: "--font-iwata",
 });
 
 export const metadata: Metadata = {
@@ -27,7 +33,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${iwata.variable} h-full antialiased`}
     >
       <body className="relative h-screen overflow-hidden font-mono bg-background text-foreground">
         <div id="ui-overlay" className="flex flex-col h-full px-[6vw] py-[6vh]">

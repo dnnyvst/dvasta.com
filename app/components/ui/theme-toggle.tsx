@@ -66,7 +66,7 @@ export const ThemeToggle = () => {
             {Object.values(THEME_CONFIG).map(({ Icon, id }) => (
               <button
                 key={id}
-                className={`z-40 pb-1 cursor-pointer border-thickness-2 ${id === currentThemeConfig.id && "border-b-2"}`}
+                className={`pb-1 cursor-pointer border-thickness-2 ${id === currentThemeConfig.id && "border-b-2"}`}
                 onClick={() => setTheme(id)}
                 onMouseEnter={() => setHoveredTheme(id)}
                 onMouseLeave={() => setHoveredTheme(null)}
@@ -77,7 +77,7 @@ export const ThemeToggle = () => {
           </>
         ) : (
           <currentThemeConfig.Icon
-            className={`z-40 cursor-pointer ${(currentThemeConfig.id === "light" || currentThemeConfig.id === "dark") && "animate-pulse"}`}
+            className={`cursor-pointer ${(currentThemeConfig.id === "light" || currentThemeConfig.id === "dark") && "animate-pulse"}`}
             size={24}
             onClick={() => setTheme(currentThemeConfig.id)}
           />

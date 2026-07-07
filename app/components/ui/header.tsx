@@ -17,7 +17,7 @@ export const Header = () => {
 
   if (!mounted || !resolvedTheme) return null;
   return (
-    <header className="flex justify-between">
+    <header className="z-40 flex justify-between">
       {ANIMATED_THEMES.includes(resolvedTheme) ? (
         <TypeWriter />
       ) : (

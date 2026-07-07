@@ -4,7 +4,7 @@ import { ARTICLES, type Article } from "@/constants";
 const Article: FC<Article> = ({ title, content }) => (
   <article>
     <h2>{title}</h2>
-    <section className="flex flex-col gap-2 pointer-events-auto">
+    <section className="z-40 flex flex-col gap-2 pointer-events-auto">
       {content}
     </section>
   </article>

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
-import { Aside, Header } from "@/components";
 import { ThemeProvider } from "next-themes";
+import { Aside, Header, MainCanvas } from "@/components";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -48,6 +48,7 @@ export default function RootLayout({
               {children}
             </main>
           </div>
+          <MainCanvas />
         </ThemeProvider>
       </body>
     </html>

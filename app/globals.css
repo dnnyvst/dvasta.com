@@ -54,12 +54,12 @@
     @apply font-iwata;
 
     --background: black;
-    --foreground: white;
+    --foreground: #cfc8bb;
 
-    --highlight-bg: white;
+    --highlight-bg: #cfc8bb;
     --highlight-fg: black;
 
-    --card-background: white;
+    --card-background: black;
 
     --font-theme: var(--font-iwata);
 

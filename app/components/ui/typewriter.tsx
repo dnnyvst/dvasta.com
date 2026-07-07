@@ -3,6 +3,7 @@
 
 import { useTheme } from "next-themes";
 import { useState, useEffect, useRef } from "react";
+import { PiLineVerticalLight } from "react-icons/pi";
 
 const THEME_TEXT: {
   [theme: string]: { primary: string[]; secondary?: string[] };
@@ -197,7 +198,7 @@ export const TypeWriter = () => {
         setDeleted(false);
         setDisplayText("");
         setDisplayTextIndex(0);
-      }, 500);
+      }, 600);
     };
 
     const interval = setInterval(sequence, 4000);
@@ -253,10 +254,13 @@ export const TypeWriter = () => {
 
   return (
     <div className="flex flex-col h-min">
-      <h1
-        className={`${showCursor && "border-r"} ${highlighted && "highlighted"} ${deleted && "opacity-0"}`}
-      >
-        {displayText}
+      <h1 className="flex items-center">
+        <span className={`${highlighted ? "highlighted" : ""}`}>
+          {!deleted && displayText}
+        </span>
+        {(showCursor || deleted) && !highlighted && (
+          <PiLineVerticalLight size={28} className="-ml-3" />
+        )}
       </h1>
       <p
         className={`w-min whitespace-nowrap transition-opacity duration-300 ${!currentSecondaryThemeText ? "opacity-0" : "opacity-60"}`}

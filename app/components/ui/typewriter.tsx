@@ -51,6 +51,7 @@ const THEME_TEXT: {
       "blossom",
       "unfold",
       "trying to feel alive",
+      "danny vasta",
     ],
     secondary: [
       "𓂃 𓈒𓏸",
@@ -67,6 +68,7 @@ const THEME_TEXT: {
       "❀ ✿",
       "⌇ ⋮",
       "☼ ✧",
+      "",
     ],
   },
   "nurture-light": {
@@ -85,6 +87,7 @@ const THEME_TEXT: {
       "blossom",
       "unfold",
       "trying to feel alive",
+      "danny vasta",
     ],
     secondary: [
       "𓂃 𓈒𓏸",
@@ -101,6 +104,7 @@ const THEME_TEXT: {
       "❀ ✿",
       "⌇ ⋮",
       "☼ ✧",
+      "",
     ],
   },
 };

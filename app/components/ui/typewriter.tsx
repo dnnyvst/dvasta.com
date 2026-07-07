@@ -9,7 +9,6 @@ const THEME_TEXT: {
 } = {
   "beautiful-world": {
     primary: [
-      "danny vasta",
       "beautiful world",
       "excuse",
       "analog sentimentalism",
@@ -20,9 +19,9 @@ const THEME_TEXT: {
       "extra story",
       "chicken",
       "i can feel my heart touching you",
+      "danny vasta",
     ],
     secondary: [
-      "",
       "아름다운 세상",
       "변명",
       "아날로그 센티멘탈리즘",
@@ -33,12 +32,18 @@ const THEME_TEXT: {
       "엑스트라 일대기",
       "닭",
       "나는 내 마음이 너를 만지는 것을 느낄 수 있어",
+      "",
     ],
   },
 };
 
+const EMPTY_THEME = "";
+
 export const TypeWriter = () => {
   const { resolvedTheme } = useTheme();
+  const currentTheme = resolvedTheme ?? EMPTY_THEME;
+  const isValidTheme = !!THEME_TEXT[currentTheme];
+
   const [mounted, setMounted] = useState<boolean>(false);
 
   const [showCursor, setShowCursor] = useState<boolean>(false);
@@ -53,24 +58,29 @@ export const TypeWriter = () => {
     newText: ReturnType<typeof setTimeout> | null;
   }>({ deleted: null, newText: null });
 
-  const currentThemeText =
-    THEME_TEXT[resolvedTheme || ""]?.primary[themeTextIndex];
+  const currentThemeText = THEME_TEXT[currentTheme]?.primary[themeTextIndex];
   const isTyping = displayText !== currentThemeText;
   const currentSecondaryThemeText =
     isTyping || deleted
       ? ""
-      : THEME_TEXT[resolvedTheme || ""]?.secondary?.[themeTextIndex];
+      : THEME_TEXT[currentTheme]?.secondary?.[themeTextIndex];
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  // reset
+  useEffect(() => {
+    setThemeTextIndex(0);
+    setDisplayText("");
+    setDisplayTextIndex(0);
+    setHighlighted(false);
+    setDeleted(false);
+  }, [currentTheme]);
+
   // cursor blink
   useEffect(() => {
-    if (!mounted || !Object.keys(THEME_TEXT).includes(resolvedTheme || "")) {
-      setShowCursor(false);
-      return;
-    }
+    if (!mounted || !isValidTheme) return;
 
     const cursorBlink = setInterval(
       () => setShowCursor((showCursor) => !showCursor),
@@ -78,11 +88,11 @@ export const TypeWriter = () => {
     );
 
     return () => clearInterval(cursorBlink);
-  }, [mounted, resolvedTheme]);
+  }, [currentTheme, isValidTheme, mounted]);
 
   // text change
   useEffect(() => {
-    if (!mounted || !Object.keys(THEME_TEXT).includes(resolvedTheme || "")) {
+    if (!mounted || !isValidTheme) {
       setShowCursor(false);
       setHighlighted(false);
       setDeleted(false);
@@ -90,6 +100,9 @@ export const TypeWriter = () => {
     }
 
     const sequence = () => {
+      if (timersRef.current.deleted) clearTimeout(timersRef.current.deleted);
+      if (timersRef.current.newText) clearTimeout(timersRef.current.newText);
+
       // highlight
       setHighlighted(true);
 
@@ -102,10 +115,7 @@ export const TypeWriter = () => {
       // change text and display
       timersRef.current.newText = setTimeout(() => {
         setThemeTextIndex((themeTextIndex) => {
-          if (
-            themeTextIndex + 1 ===
-            THEME_TEXT[resolvedTheme || ""].primary.length
-          ) {
+          if (themeTextIndex + 1 === THEME_TEXT[currentTheme].primary.length) {
             return 0;
           }
           return themeTextIndex + 1;
@@ -123,20 +133,32 @@ export const TypeWriter = () => {
     const currentTimers = timersRef.current;
     return () => {
       clearInterval(interval);
-      if (currentTimers.deleted) clearTimeout(currentTimers.deleted);
-      if (currentTimers.newText) clearTimeout(currentTimers.newText);
+      if (currentTimers.deleted) {
+        clearTimeout(currentTimers.deleted);
+        currentTimers.deleted = null;
+      }
+
+      if (currentTimers.newText) {
+        clearTimeout(currentTimers.newText);
+        currentTimers.newText = null;
+      }
     };
-  }, [mounted, resolvedTheme]);
+  }, [currentTheme, isValidTheme, mounted]);
 
   // typewriter
   useEffect(() => {
-    setShowCursor(true);
+    if (
+      !mounted ||
+      !isValidTheme ||
+      !currentThemeText ||
+      displayText === currentThemeText
+    ) {
+      return;
+    }
+
     const typingSpeed = Math.floor(Math.random() * (50 - 40 + 1)) + 40;
     const typeWriter = setTimeout(() => {
-      if (displayText === currentThemeText) {
-        setDisplayTextIndex(0);
-        return;
-      }
+      setShowCursor(true);
       setDisplayText((displayText) => {
         return displayText + currentThemeText[displayTextIndex];
       });
@@ -146,7 +168,14 @@ export const TypeWriter = () => {
     }, typingSpeed);
 
     return () => clearTimeout(typeWriter);
-  }, [currentThemeText, displayText, displayTextIndex]);
+  }, [
+    currentTheme,
+    currentThemeText,
+    displayText,
+    displayTextIndex,
+    isValidTheme,
+    mounted,
+  ]);
 
   if (!mounted || !resolvedTheme) return null;
 

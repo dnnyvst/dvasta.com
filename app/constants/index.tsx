@@ -146,10 +146,15 @@ export const ARTICLES: Article[] = [
       <>
         <p>software engineer with 7+ years of experience.</p>
         <p>
-          fullstack engineer at{" "}
-          <Link href="https://www.chewy.com/" target="_blank" rel="noreferrer">
+          fullstack engineer at
+          <Link
+            href="https://www.chewy.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="px-1"
+          >
             Chewy
-          </Link>{" "}
+          </Link>
           on the Sponsored Ads team.
         </p>
       </>

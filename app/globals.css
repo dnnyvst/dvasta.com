@@ -119,6 +119,17 @@
   a {
     @apply text-sm;
 
+    background-image: linear-gradient(
+      to right,
+      var(--color-highlight-bg) 50%,
+      transparent 50%
+    );
+    background-size: 200% 102%;
+    background-position: 100% 0%;
+    transition:
+      background-position 300ms ease-in-out,
+      color 300ms ease-in-out;
+
     text-decoration: underline;
     text-underline-offset: 4px;
     font-weight: bold;
@@ -127,6 +138,9 @@
 
   a:hover {
     font-style: italic;
+
+    background-position: 0% 0%;
+    color: var(--color-highlight-fg);
   }
 
   h1 {

@@ -57,26 +57,27 @@ export const ThemeToggle = () => {
   return (
     <div className="flex flex-col items-end gap-2">
       <span
-        className="flex items-center gap-4 px-2 py-1 w-min"
+        className="flex items-center gap-4"
         onMouseEnter={() => setMenuOpen(true)}
         onMouseLeave={() => setMenuOpen(false)}
       >
         {menuOpen ? (
           <>
             {Object.values(THEME_CONFIG).map(({ Icon, id }) => (
-              <Icon
+              <button
                 key={id}
-                className="z-40 cursor-pointer"
-                size={24}
+                className={`z-40 pb-1 cursor-pointer border-thickness-2 ${id === currentThemeConfig.id && "border-b-2"}`}
                 onClick={() => setTheme(id)}
                 onMouseEnter={() => setHoveredTheme(id)}
                 onMouseLeave={() => setHoveredTheme(null)}
-              />
+              >
+                <Icon size={24} />
+              </button>
             ))}
           </>
         ) : (
           <currentThemeConfig.Icon
-            className="z-40 cursor-pointer"
+            className={`z-40 cursor-pointer ${(currentThemeConfig.id === "light" || currentThemeConfig.id === "dark") && "animate-pulse"}`}
             size={24}
             onClick={() => setTheme(currentThemeConfig.id)}
           />

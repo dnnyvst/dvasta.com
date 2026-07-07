@@ -54,6 +54,8 @@ export const ThemeToggle = () => {
 
   const currentThemeConfig = THEME_CONFIG[resolvedTheme || "light"];
 
+  const isMobile = window.matchMedia("(max-width: 637px)").matches;
+
   return (
     <div className="flex flex-col items-end gap-2">
       <span
@@ -67,7 +69,13 @@ export const ThemeToggle = () => {
               <button
                 key={id}
                 className={`pb-1 cursor-pointer border-thickness-2 ${id === currentThemeConfig.id && "border-b-2"}`}
-                onClick={() => setTheme(id)}
+                onClick={() => {
+                  setTheme(id);
+                  if (isMobile) {
+                    setMenuOpen(false);
+                    setHoveredTheme(null);
+                  }
+                }}
                 onMouseEnter={() => setHoveredTheme(id)}
                 onMouseLeave={() => setHoveredTheme(null)}
               >

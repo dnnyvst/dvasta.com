@@ -29,7 +29,7 @@ export const MainCanvas = () => {
           alpha: true,
         }}
         dpr={[1, 2]}
-        shadows
+        shadows={{ type: THREE.PCFShadowMap }}
         camera={{ position: [0, 2, 10] }}
       >
         <ambientLight intensity={0.1} />

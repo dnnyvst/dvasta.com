@@ -36,7 +36,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${iwata.variable} h-full antialiased`}
     >
-      <body className="relative h-screen overflow-hidden font-mono bg-background text-foreground">
+      <body className="relative h-screen overflow-hidden bg-background text-foreground">
         <ThemeProvider themes={["light", "dark", "beautiful-world"]}>
           <div
             id="ui-overlay"

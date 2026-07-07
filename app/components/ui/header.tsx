@@ -4,7 +4,7 @@ import { TypeWriter, ThemeToggle } from "@/components";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
-const ANIMATED_THEMES = ["beautiful-world"];
+const ANIMATED_THEMES = ["beautiful-world", "nurture-dark"];
 
 export const Header = () => {
   const { resolvedTheme } = useTheme();

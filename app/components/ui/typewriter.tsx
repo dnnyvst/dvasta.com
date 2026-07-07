@@ -35,6 +35,24 @@ const THEME_TEXT: {
       "",
     ],
   },
+  "nurture-dark": {
+    primary: [
+      "lifelike",
+      "look at the sky",
+      "get your wish",
+      "wind tempos",
+      "musician",
+      "do-re-mi-fa-so-la-ti-do",
+      "mother",
+      "dullscythe",
+      "sweet time",
+      "mirror",
+      "something comforting",
+      "blossom",
+      "unfold",
+      "trying to feel alive",
+    ],
+  },
 };
 
 const EMPTY_THEME = "";

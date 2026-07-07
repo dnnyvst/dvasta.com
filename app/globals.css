@@ -11,8 +11,12 @@
     --highlight-fg: #e8e6dc;
 
     --card-background: #faf9f5;
+
+    --font-theme: var(--font-mono);
   }
   [data-theme="light"] {
+    @apply font-mono;
+
     /* --background: #cfc8bb;
   --foreground: #141310; */
     --background: #e8e6dc;
@@ -24,6 +28,8 @@
     --card-background: #faf9f5;
   }
   [data-theme="dark"] {
+    @apply font-mono;
+
     /* --foreground: #e8e6dc; */
     --background: #0f0f0e;
     --foreground: #cfc8bb;
@@ -34,6 +40,8 @@
     --card-background: #141413;
   }
   [data-theme="beautiful-world"] {
+    @apply font-mono;
+
     --background: #237cde;
     --foreground: white;
 
@@ -41,6 +49,23 @@
     --highlight-fg: #237cde;
 
     --card-background: #6590d2;
+  }
+  [data-theme="nurture-dark"] {
+    @apply font-iwata;
+
+    --background: black;
+    --foreground: white;
+
+    --highlight-bg: white;
+    --highlight-fg: black;
+
+    --card-background: white;
+
+    --font-theme: var(--font-iwata);
+
+    h1 {
+      font-weight: bold;
+    }
   }
   :root,
   [data-theme] {
@@ -61,10 +86,11 @@
   body {
     background: var(--background);
     color: var(--foreground);
+    font-family: var(--font-theme);
   }
 
   a {
-    @apply font-mono text-sm;
+    @apply text-sm;
 
     text-decoration: underline;
     text-underline-offset: 4px;

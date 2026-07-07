@@ -290,7 +290,7 @@ export const TypeWriter = () => {
         </span>
       </h1>
       <p
-        className={`w-min whitespace-nowrap transition-opacity duration-300 ${!currentSecondaryThemeText ? "opacity-0" : "opacity-60"}`}
+        className={`flex max-w-3/4 sm:max-w-full transition-opacity duration-300 ${!currentSecondaryThemeText ? "opacity-0" : "opacity-60"}`}
       >
         {currentSecondaryThemeText}
       </p>

@@ -57,7 +57,7 @@ export const ThemeToggle = () => {
   const isMobile = window.matchMedia("(max-width: 637px)").matches;
 
   return (
-    <div className="flex flex-col items-end gap-2">
+    <div className="absolute right-0 flex flex-col items-end gap-2">
       <span
         className="flex flex-col-reverse items-center gap-4 sm:flex-row"
         onMouseEnter={() => setMenuOpen(true)}

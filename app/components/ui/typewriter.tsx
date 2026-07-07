@@ -264,24 +264,30 @@ export const TypeWriter = () => {
   return (
     <div className="flex flex-col h-min">
       <h1 className="flex items-center">
-        <span className={`flex flex-col ${highlighted ? "highlighted" : ""}`}>
+        <span
+          className={`flex ${highlighted ? "highlighted" : ""} ${isMultiLine ? "flex-col" : "flex-row"}`}
+        >
           {isMultiLine && !deleted ? (
             <>
               <span>{chunk1}</span>
               <span className="flex items-center">
                 {chunk2}
-                {(showCursor || deleted) && !highlighted && (
-                  <PiLineVerticalLight size={28} className="-ml-3" />
-                )}
+                <PiLineVerticalLight
+                  size={28}
+                  className={`-ml-3 ${(showCursor || deleted) && !highlighted ? "opacity-100" : "opacity-0"}`}
+                />
               </span>
             </>
           ) : (
-            <>{!deleted && displayText}</>
+            <>
+              {!deleted && displayText}
+              <PiLineVerticalLight
+                size={28}
+                className={`-ml-3 -mr-4 $ ${(showCursor || deleted) && !highlighted ? "opacity-100" : "opacity-0"}`}
+              />
+            </>
           )}
         </span>
-        {(showCursor || deleted) && !highlighted && !isMultiLine && (
-          <PiLineVerticalLight size={28} className="-ml-3" />
-        )}
       </h1>
       <p
         className={`w-min whitespace-nowrap transition-opacity duration-300 ${!currentSecondaryThemeText ? "opacity-0" : "opacity-60"}`}

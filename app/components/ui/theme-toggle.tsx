@@ -59,7 +59,7 @@ export const ThemeToggle = () => {
   return (
     <div className="flex flex-col items-end gap-2">
       <span
-        className="flex items-center gap-4"
+        className="flex flex-col items-center gap-4 sm:flex-row"
         onMouseEnter={() => setMenuOpen(true)}
         onMouseLeave={() => setMenuOpen(false)}
       >

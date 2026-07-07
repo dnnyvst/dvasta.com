@@ -5,6 +5,10 @@ import { useTheme } from "next-themes";
 import { useState, useEffect, useRef } from "react";
 import { PiLineVerticalLight } from "react-icons/pi";
 
+const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+const getRandomLetter = () =>
+  ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
+
 const THEME_TEXT: {
   [theme: string]: { primary: string[]; secondary?: string[] };
 } = {
@@ -125,6 +129,7 @@ export const TypeWriter = () => {
   const [deleted, setDeleted] = useState<boolean>(false);
   const [displayText, setDisplayText] = useState<string>("");
   const [displayTextIndex, setDisplayTextIndex] = useState<number>(0);
+  const [madeAMistake, setMadeAMistake] = useState<boolean>(false);
 
   const timersRef = useRef<{
     deleted: ReturnType<typeof setTimeout> | null;
@@ -229,16 +234,33 @@ export const TypeWriter = () => {
       return;
     }
 
-    const typingSpeed = Math.floor(Math.random() * (50 - 40 + 1)) + 40;
-    const typeWriter = setTimeout(() => {
-      setShowCursor(true);
-      setDisplayText((displayText) => {
-        return displayText + currentThemeText[displayTextIndex];
-      });
-      setDisplayTextIndex((displayTextIndex) => {
-        return displayTextIndex + 1;
-      });
-    }, typingSpeed);
+    // setMadeAMistake(mistake);
+
+    const typingSpeed = Math.floor(Math.random() * (50 - 30 + 1)) + 30;
+    const typeWriter = setTimeout(
+      () => {
+        setShowCursor(true);
+        // 5% chance to make a mistake
+        if (Math.random() < 0.05 && !madeAMistake) {
+          setDisplayText((displayText) => displayText + getRandomLetter());
+          // setDisplayTextIndex((displayTextIndex) => displayTextIndex + 1);
+          setMadeAMistake(true);
+        } else {
+          if (madeAMistake) {
+            // fix it
+            setDisplayText((displayText) => displayText.slice(0, -1));
+            setMadeAMistake(false);
+          } else {
+            // normal
+            setDisplayText(
+              (displayText) => displayText + currentThemeText[displayTextIndex],
+            );
+            setDisplayTextIndex((displayTextIndex) => displayTextIndex + 1);
+          }
+        }
+      },
+      madeAMistake ? typingSpeed * 3 : typingSpeed,
+    );
 
     return () => clearTimeout(typeWriter);
   }, [
@@ -247,6 +269,7 @@ export const TypeWriter = () => {
     displayText,
     displayTextIndex,
     isValidTheme,
+    madeAMistake,
     mounted,
   ]);
 

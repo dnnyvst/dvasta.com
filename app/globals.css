@@ -54,9 +54,9 @@
     @apply font-iwata;
 
     --background: black;
-    --foreground: #cfc8bb;
+    --foreground: white;
 
-    --highlight-bg: #cfc8bb;
+    --highlight-bg: white;
     --highlight-fg: black;
 
     --card-background: black;

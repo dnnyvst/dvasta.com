@@ -63,8 +63,11 @@
 
     --font-theme: var(--font-iwata);
 
-    h1 {
+    h1,
+    h2,
+    a {
       font-weight: bold;
+      letter-spacing: 0.1em;
     }
   }
   [data-theme="nurture-dark"] {
@@ -80,8 +83,11 @@
 
     --font-theme: var(--font-iwata);
 
-    h1 {
+    h1,
+    h2,
+    a {
       font-weight: bold;
+      letter-spacing: 0.1em;
     }
   }
   :root,

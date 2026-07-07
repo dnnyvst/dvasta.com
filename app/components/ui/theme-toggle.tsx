@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { TbSun, TbMoonStars } from "react-icons/tb";
 import { BsCloudSun } from "react-icons/bs";
-import { PiPlant } from "react-icons/pi";
+import { PiPlant, PiPlantFill } from "react-icons/pi";
 import { type IconType } from "react-icons";
 
 // something comforting -- nurture theme
@@ -12,8 +12,13 @@ import { type IconType } from "react-icons";
 const THEME_CONFIG: {
   [theme: string]: { Icon: IconType; label: string; id: string };
 } = {
-  "nurture-dark": {
+  "nurture-light": {
     Icon: PiPlant,
+    label: "nurture (light)",
+    id: "nurture-light",
+  },
+  "nurture-dark": {
+    Icon: PiPlantFill,
     label: "nurture (dark)",
     id: "nurture-dark",
   },

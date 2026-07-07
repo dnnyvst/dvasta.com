@@ -50,6 +50,23 @@
 
     --card-background: #6590d2;
   }
+  [data-theme="nurture-light"] {
+    @apply font-iwata;
+
+    --background: white;
+    --foreground: black;
+
+    --highlight-bg: black;
+    --highlight-fg: white;
+
+    --card-background: white;
+
+    --font-theme: var(--font-iwata);
+
+    h1 {
+      font-weight: bold;
+    }
+  }
   [data-theme="nurture-dark"] {
     @apply font-iwata;
 

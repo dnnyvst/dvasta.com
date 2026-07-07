@@ -63,10 +63,12 @@
 
     --font-theme: var(--font-iwata);
 
-    h1,
-    h2,
-    a {
-      font-weight: bold;
+    h1 {
+      font-weight: normal;
+      letter-spacing: 0.1em;
+    }
+    a,
+    h2 {
       letter-spacing: 0.1em;
     }
   }
@@ -83,10 +85,12 @@
 
     --font-theme: var(--font-iwata);
 
-    h1,
-    h2,
-    a {
-      font-weight: bold;
+    h1 {
+      font-weight: normal;
+      letter-spacing: 0.1em;
+    }
+    a,
+    h2 {
       letter-spacing: 0.1em;
     }
   }
@@ -127,7 +131,6 @@
 
   h1 {
     @apply text-lg;
-    --font-weight: bold;
   }
 
   h2 {

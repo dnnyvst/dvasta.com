@@ -252,13 +252,34 @@ export const TypeWriter = () => {
 
   if (!mounted || !resolvedTheme) return null;
 
+  let chunk1 = "";
+  let chunk2 = "";
+  if (displayText.length > 20) {
+    chunk1 = displayText.substring(0, 20).trim();
+    chunk2 = displayText.substring(20).trim();
+  }
+  const isMobile = window.matchMedia("(max-width: 637px)").matches;
+  const isMultiLine = isMobile && chunk2.length > 1;
+
   return (
     <div className="flex flex-col h-min">
       <h1 className="flex items-center">
-        <span className={`${highlighted ? "highlighted" : ""}`}>
-          {!deleted && displayText}
+        <span className={`flex flex-col ${highlighted ? "highlighted" : ""}`}>
+          {isMultiLine && !deleted ? (
+            <>
+              <span>{chunk1}</span>
+              <span className="flex items-center">
+                {chunk2}
+                {(showCursor || deleted) && !highlighted && (
+                  <PiLineVerticalLight size={28} className="-ml-3" />
+                )}
+              </span>
+            </>
+          ) : (
+            <>{!deleted && displayText}</>
+          )}
         </span>
-        {(showCursor || deleted) && !highlighted && (
+        {(showCursor || deleted) && !highlighted && !isMultiLine && (
           <PiLineVerticalLight size={28} className="-ml-3" />
         )}
       </h1>

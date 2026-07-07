@@ -27,12 +27,12 @@ const THEME_TEXT: {
       "변명",
       "아날로그 센티멘탈리즘",
       "흰천장",
-      "",
+      "꿈의 다음 부분을 보기 위해",
       "격변의 시대",
       "청춘반란",
       "엑스트라 일대기",
-      "",
-      "",
+      "닭",
+      "나는 내 마음이 너를 만지는 것을 느낄 수 있어",
     ],
   },
 };
@@ -55,8 +55,9 @@ export const TypeWriter = () => {
 
   const currentThemeText =
     THEME_TEXT[resolvedTheme || ""]?.primary[themeTextIndex];
+  const isTyping = displayText !== currentThemeText;
   const currentSecondaryThemeText =
-    displayText !== currentThemeText || deleted
+    isTyping || deleted
       ? ""
       : THEME_TEXT[resolvedTheme || ""]?.secondary?.[themeTextIndex];
 
@@ -129,20 +130,20 @@ export const TypeWriter = () => {
 
   // typewriter
   useEffect(() => {
+    setShowCursor(true);
+    const typingSpeed = Math.floor(Math.random() * (50 - 40 + 1)) + 40;
     const typeWriter = setTimeout(() => {
       if (displayText === currentThemeText) {
         setDisplayTextIndex(0);
-        setShowCursor(true);
         return;
       }
-      setShowCursor(false);
       setDisplayText((displayText) => {
         return displayText + currentThemeText[displayTextIndex];
       });
       setDisplayTextIndex((displayTextIndex) => {
         return displayTextIndex + 1;
       });
-    }, 50);
+    }, typingSpeed);
 
     return () => clearTimeout(typeWriter);
   }, [currentThemeText, displayText, displayTextIndex]);
@@ -156,7 +157,9 @@ export const TypeWriter = () => {
       >
         {displayText}
       </h1>
-      <p className={`w-min whitespace-nowrap opacity-50`}>
+      <p
+        className={`w-min whitespace-nowrap transition-opacity duration-300 ${!currentSecondaryThemeText ? "opacity-0" : "opacity-60"}`}
+      >
         {currentSecondaryThemeText}
       </p>
     </div>

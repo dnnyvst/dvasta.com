@@ -1,33 +1,22 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 
-const MAX_POINTS = 200;
+const MAX_POINTS = 100;
 
 export const NurtureCursorLineTrail = () => {
-  const [setupComplete, setSetupComplete] = useState<boolean>(false);
-
+  const lineRef = useRef<THREE.Line>(null);
   const points = useRef<THREE.Vector3[]>(
     Array.from({ length: MAX_POINTS }, () => new THREE.Vector3(0, 0, 0)),
   );
-  const lineGeometry = useRef<THREE.BufferGeometry | null>(null);
+
   const hasMoved = useRef<boolean>(false);
   const lastMousePosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
-  useEffect(() => {
-    const buffer = new THREE.BufferGeometry();
-    buffer.setFromPoints(points.current);
-    buffer.setDrawRange(0, 0);
-    lineGeometry.current = buffer;
-
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setSetupComplete(true);
-  }, []);
-
   useFrame(({ pointer, viewport }) => {
-    if (!lineGeometry?.current || !points?.current) return;
+    if (!lineRef.current) return;
 
     // convert normalized coordinates to viewport coordinates
     const targetX = (pointer.x * viewport.width) / 2;
@@ -37,7 +26,6 @@ export const NurtureCursorLineTrail = () => {
       targetX === lastMousePosition.current.x &&
       targetY === lastMousePosition.current.y
     ) {
-      console.log("paused");
       return;
     }
 
@@ -57,22 +45,23 @@ export const NurtureCursorLineTrail = () => {
       points.current.push(new THREE.Vector3(targetX, targetY, 0));
     }
 
-    const positionAttribute = lineGeometry.current.getAttribute(
-      "position",
-    ) as THREE.BufferAttribute;
+    const geometry = lineRef.current.geometry;
+    const position = geometry.getAttribute("position") as THREE.BufferAttribute;
 
-    for (let i = 0; i < points.current.length; i++) {
-      const point = points.current[i];
-      positionAttribute.setXYZ(i, point.x, point.y, point.z);
+    if (position) {
+      for (let i = 0; i < points.current.length; i++) {
+        const point = points.current[i];
+        position.setXYZ(i, point.x, point.y, point.z);
+      }
+      position.needsUpdate = true;
     }
 
-    lineGeometry.current.setDrawRange(0, MAX_POINTS);
-    positionAttribute.needsUpdate = true;
+    geometry.computeBoundingSphere();
   });
 
-  if (!setupComplete) return null;
   return (
-    <line geometry={lineGeometry.current}>
+    <line ref={lineRef}>
+      <bufferGeometry onUpdate={(self) => self.setFromPoints(points.current)} />
       <lineBasicMaterial color="white" />
     </line>
   );

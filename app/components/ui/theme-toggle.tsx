@@ -72,8 +72,8 @@ export const ThemeToggle = () => {
                 onClick={() => {
                   setTheme(id);
                   if (isMobile) {
-                    setMenuOpen(false);
-                    setHoveredTheme(null);
+                    //setMenuOpen(false);
+                    setHoveredTheme(id);
                   }
                 }}
                 onMouseEnter={() => setHoveredTheme(id)}

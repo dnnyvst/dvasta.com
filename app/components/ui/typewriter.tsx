@@ -5,26 +5,69 @@ import { useTheme } from "next-themes";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { PiLineVerticalLight } from "react-icons/pi";
 
-const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
-const getRandomLetter = () =>
-  ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
+const NURTURE_TEXT = {
+  primary: [
+    "lifelike.",
+    "look at the sky.",
+    "get your wish.",
+    "wind tempos.",
+    "musician.",
+    "do-re-mi-fa-so-la-ti-do.",
+    "mother.",
+    "dullscythe.",
+    "sweet time.",
+    "mirror.",
+    "something comforting.",
+    "blossom.",
+    "unfold.",
+    "trying to feel alive.",
+    "danny vasta.",
+  ],
+  secondary: [
+    "𓂃 𓈒𓏸",
+    "☁︎ ⋆ ☾",
+    "✧ ⋆ ✩",
+    "〰︎ 〰︎",
+    "♩ ♪",
+    "♫ ♪ ♩",
+    "♡",
+    "† 𖤐",
+    "ꕤ ⋆",
+    "◐ ◌",
+    "☕︎ ☁︎",
+    "❀ ✿",
+    "⌇ ⋮",
+    "☼ ✧",
+    "",
+  ],
+};
 
-const THEME_TEXT: {
-  [theme: string]: { primary: string[]; secondary?: string[] };
-} = {
+const PERSONAL_TEXT = {
+  primary: [
+    "danny vasta.",
+    "software engineer at Chewy.",
+    "react enthusiast.",
+    "music lover.",
+    "pastry enjoyer.",
+    "coffee snob.",
+  ],
+  secondary: [],
+};
+
+const TEXT = {
   "beautiful-world": {
     primary: [
-      "beautiful world",
-      "excuse",
-      "analog sentimentalism",
-      "white ceiling",
-      "to see the next part of the dream",
-      "age of fluctuation",
-      "youth rebellion",
-      "extra story",
-      "chicken",
-      "i can feel my heart touching you",
-      "danny vasta",
+      "beautiful world.",
+      "excuse.",
+      "analog sentimentalism.",
+      "white ceiling.",
+      "to see the next part of the dream.",
+      "age of fluctuation.",
+      "youth rebellion.",
+      "extra story.",
+      "chicken.",
+      "i can feel my heart touching you.",
+      "danny vasta.",
     ],
     secondary: [
       "아름다운 세상",
@@ -40,88 +83,66 @@ const THEME_TEXT: {
       "",
     ],
   },
-  "nurture-dark": {
-    primary: [
-      "lifelike",
-      "look at the sky",
-      "get your wish",
-      "wind tempos",
-      "musician",
-      "do-re-mi-fa-so-la-ti-do",
-      "mother",
-      "dullscythe",
-      "sweet time",
-      "mirror",
-      "something comforting",
-      "blossom",
-      "unfold",
-      "trying to feel alive",
-      "danny vasta",
-    ],
-    secondary: [
-      "𓂃 𓈒𓏸",
-      "☁︎ ⋆ ☾",
-      "✧ ⋆ ✩",
-      "〰︎ 〰︎",
-      "♩ ♪",
-      "♫ ♪ ♩",
-      "♡",
-      "† 𖤐",
-      "ꕤ ⋆",
-      "◐ ◌",
-      "☕︎ ☁︎",
-      "❀ ✿",
-      "⌇ ⋮",
-      "☼ ✧",
-      "",
-    ],
-  },
-  "nurture-light": {
-    primary: [
-      "lifelike",
-      "look at the sky",
-      "get your wish",
-      "wind tempos",
-      "musician",
-      "do-re-mi-fa-so-la-ti-do",
-      "mother",
-      "dullscythe",
-      "sweet time",
-      "mirror",
-      "something comforting",
-      "blossom",
-      "unfold",
-      "trying to feel alive",
-      "danny vasta",
-    ],
-    secondary: [
-      "𓂃 𓈒𓏸",
-      "☁︎ ⋆ ☾",
-      "✧ ⋆ ✩",
-      "〰︎ 〰︎",
-      "♩ ♪",
-      "♫ ♪ ♩",
-      "♡",
-      "† 𖤐",
-      "ꕤ ⋆",
-      "◐ ◌",
-      "☕︎ ☁︎",
-      "❀ ✿",
-      "⌇ ⋮",
-      "☼ ✧",
-      "",
-    ],
-  },
+
+  nurture: NURTURE_TEXT,
+  personal: PERSONAL_TEXT,
+};
+
+type ThemeKey = keyof typeof TEXT;
+
+const getThemeKey = (theme: string): ThemeKey => {
+  if (theme === "nurture-dark" || theme === "nurture-light") {
+    return "nurture";
+  }
+
+  if (theme === "dark" || theme === "light") {
+    return "personal";
+  }
+
+  return "beautiful-world";
 };
 
 const EMPTY_THEME = "";
+
+const KEYBOARD = [
+  "`1234567890-=.",
+  "qwertyuiop[]\\.",
+  "asdfghjkl;'.",
+  "zxcvbnm,./.",
+];
+const getMissedKey = (correctLetter: string) => {
+  if (correctLetter === " ") {
+    const spaceNeighbors = "cvbnm";
+    return spaceNeighbors[Math.floor(Math.random() * spaceNeighbors.length)];
+  }
+
+  for (const row of KEYBOARD) {
+    const index = row.indexOf(correctLetter);
+    if (index === -1) continue;
+
+    const neighbors = [];
+
+    if (index > 0) {
+      neighbors.push(row[index - 1]);
+    }
+
+    if (index < row.length - 1) {
+      neighbors.push(row[index + 1]);
+    }
+
+    return neighbors[Math.floor(Math.random() * neighbors.length)];
+  }
+
+  return correctLetter;
+};
 
 type TypingMode = "typing" | "fixing" | "deleting";
 
 export const TypeWriter = () => {
   const { resolvedTheme } = useTheme();
   const currentTheme = resolvedTheme ?? EMPTY_THEME;
-  const isValidTheme = !!THEME_TEXT[currentTheme];
+  const themeKey = getThemeKey(currentTheme);
+  const isValidTheme = !!TEXT[themeKey];
 
   const [mounted, setMounted] = useState<boolean>(false);
 
@@ -142,12 +163,12 @@ export const TypeWriter = () => {
 
   const showCursor = cursorBlinking || typingMode === "deleting";
 
-  const currentThemeText = THEME_TEXT[currentTheme]?.primary[themeTextIndex];
+  const currentThemeText = TEXT[themeKey]?.primary[themeTextIndex];
   const isTyping = displayText !== currentThemeText;
   const currentSecondaryThemeText =
     isTyping || typingMode === "deleting"
       ? ""
-      : THEME_TEXT[currentTheme]?.secondary?.[themeTextIndex];
+      : TEXT[themeKey]?.secondary?.[themeTextIndex];
 
   const resetTypingState = useCallback(() => {
     setDisplayText("");
@@ -205,7 +226,7 @@ export const TypeWriter = () => {
       // change text and display
       timersRef.current.newText = setTimeout(() => {
         setThemeTextIndex((themeTextIndex) => {
-          if (themeTextIndex + 1 === THEME_TEXT[currentTheme].primary.length) {
+          if (themeTextIndex + 1 === TEXT[themeKey].primary.length) {
             return 0;
           }
           return themeTextIndex + 1;
@@ -215,7 +236,7 @@ export const TypeWriter = () => {
       }, 600);
     };
 
-    const interval = setInterval(sequence, 4000);
+    const interval = setInterval(sequence, 5000);
 
     const currentTimers = timersRef.current;
     return () => {
@@ -244,10 +265,17 @@ export const TypeWriter = () => {
       return;
     }
 
+    // backspacing: constant
+    // typing: random within range, plus hesitation
+    // type faster after mistakes
     const typingSpeed =
       typingMode === "fixing"
-        ? 70
-        : Math.floor(Math.random() * (50 - 30 + 1)) + 30;
+        ? 120
+        : Math.floor(Math.random() * (70 - 45 + 1)) +
+          45 +
+          (Math.random() < 0.03 ? 100 : 0) -
+          mistakeCount * 20;
+
     const typeWriter = setTimeout(() => {
       setCursorBlinking(true);
 
@@ -257,9 +285,12 @@ export const TypeWriter = () => {
           if (
             mistakeCount < 1 &&
             mistakeIndex === null &&
-            Math.random() < 0.05
+            Math.random() < 0.075
           ) {
-            setDisplayText((displayText) => displayText + getRandomLetter());
+            setDisplayText(
+              (displayText) =>
+                displayText + getMissedKey(currentThemeText[displayTextIndex]),
+            );
             setMistakeIndex(displayTextIndex);
             setMistakeCount((mistakeCount) => mistakeCount + 1);
           } else {
@@ -267,7 +298,7 @@ export const TypeWriter = () => {
             // or at the end, start fixing
             if (
               mistakeIndex !== null &&
-              (displayTextIndex > mistakeIndex + 3 ||
+              (displayTextIndex >= mistakeIndex + 3 ||
                 displayTextIndex >= currentThemeText.length)
             ) {
               setTypingMode("fixing");

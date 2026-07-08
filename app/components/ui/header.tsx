@@ -4,8 +4,6 @@ import { TypeWriter, ThemeToggle } from "@/components";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
-const ANIMATED_THEMES = ["beautiful-world", "nurture-dark", "nurture-light"];
-
 export const Header = () => {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState<boolean>(false);
@@ -18,11 +16,7 @@ export const Header = () => {
   if (!mounted || !resolvedTheme) return null;
   return (
     <header className="relative z-40 flex">
-      {ANIMATED_THEMES.includes(resolvedTheme) ? (
-        <TypeWriter />
-      ) : (
-        <h1>danny vasta</h1>
-      )}
+      <TypeWriter />
       <ThemeToggle />
     </header>
   );

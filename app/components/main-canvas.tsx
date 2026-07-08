@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
+import { NurtureCursorLineTrail } from "@/components";
 
 // const SpinningCube = () => {
 //   const mesh = useRef<THREE.Mesh>(null);
@@ -34,12 +35,14 @@ export const MainCanvas = () => {
         }}
         dpr={[1, 2]}
         shadows={{ type: THREE.PCFShadowMap }}
-        camera={{ position: [0, 2, 10] }}
+        camera={{ position: [0, 0, 1] }}
       >
         <ambientLight intensity={0.1} />
         <directionalLight color="white" position={[2, 5, 2]} castShadow />
-        {/* <OrbitControls />
-        <SpinningCube /> */}
+        <OrbitControls />
+
+        <NurtureCursorLineTrail />
+        {/* <SpinningCube /> */}
         {/* floor */}
         {/* <mesh
           position={[0, -3, 0]}

@@ -1,17 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export const useMouseListener = () => {
-  // todo - use refs
-  const [x, setX] = useState<number>(0);
-  const [y, setY] = useState<number>(0);
+  const mouse = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const mouseMove = (event: MouseEvent) => {
-      setX((event.clientX / window.innerWidth) * 2 - 1);
-      setY(-(event.clientY / window.innerHeight) * 2 + 1);
+      mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
     };
+
     const touchMove = (event: TouchEvent) => {
-      console.log(event.touches[0].pageX, event.touches[0].pageY);
+      if (event.touches.length === 0) return;
+
+      const touch = event.touches[0];
+      mouse.current.x = (touch.clientX / window.innerWidth) * 2 - 1;
+      mouse.current.y = -(touch.clientY / window.innerHeight) * 2 + 1;
     };
     window.addEventListener("mousemove", mouseMove);
     window.addEventListener("touchmove", touchMove);
@@ -22,5 +25,5 @@ export const useMouseListener = () => {
     };
   }, []);
 
-  return { x, y };
+  return mouse;
 };

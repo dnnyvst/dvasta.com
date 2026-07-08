@@ -1,14 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-export const useMouseListener = () =>
+export const useMouseListener = () => {
+  // todo - use refs
+  const [x, setX] = useState<number>(0);
+  const [y, setY] = useState<number>(0);
+
   useEffect(() => {
     const mouseMove = (event: MouseEvent) => {
-      console.log(`x:${event.pageX}, y:${event.pageY}`);
-      console.log("normalized:");
-      // Convert to Normalized Device Coordinates (-1 to +1)
-      console.log(
-        `x:${(event.clientX / window.innerWidth) * 2 - 1}, y:${-(event.clientY / window.innerHeight) * 2 + 1}`,
-      );
+      setX((event.clientX / window.innerWidth) * 2 - 1);
+      setY(-(event.clientY / window.innerHeight) * 2 + 1);
     };
     const touchMove = (event: TouchEvent) => {
       console.log(event.touches[0].pageX, event.touches[0].pageY);
@@ -21,3 +21,6 @@ export const useMouseListener = () =>
       window.removeEventListener("touchmove", touchMove);
     };
   }, []);
+
+  return { x, y };
+};

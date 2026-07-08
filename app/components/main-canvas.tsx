@@ -3,17 +3,17 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { useMouseListener } from "@/hooks";
 
 // const SpinningCube = () => {
 //   const mesh = useRef<THREE.Mesh>(null);
 
-//   const { mouse } = useThree();
-
-//   useFrame((_, delta) => {
+//   useFrame(({ pointer }, delta) => {
 //     if (!mesh?.current) return;
 //     mesh.current.rotation.y -= delta / 2;
 //     mesh.current.rotation.z += delta / 4;
+
+//     mesh.current.position.x = pointer.x;
+//     mesh.current.position.y = pointer.y;
 //   });
 
 //   return (
@@ -25,8 +25,6 @@ import { useMouseListener } from "@/hooks";
 // };
 
 export const MainCanvas = () => {
-  // useMouseListener();
-
   return (
     <div id="main-canvas-container" className="fixed inset-0 z-0">
       <Canvas

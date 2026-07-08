@@ -49,7 +49,7 @@ const PERSONAL_TEXT = {
     "react enthusiast.",
     "music lover.",
     "pastry enjoyer.",
-    "coffee snob.",
+    "coffee fiend.",
   ],
   secondary: [],
 };

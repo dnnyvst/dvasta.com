@@ -2,7 +2,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { PiLineVerticalLight } from "react-icons/pi";
 
 const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
@@ -116,6 +116,8 @@ const THEME_TEXT: {
 
 const EMPTY_THEME = "";
 
+type TypingMode = "typing" | "fixing" | "deleting";
+
 export const TypeWriter = () => {
   const { resolvedTheme } = useTheme();
   const currentTheme = resolvedTheme ?? EMPTY_THEME;
@@ -123,45 +125,55 @@ export const TypeWriter = () => {
 
   const [mounted, setMounted] = useState<boolean>(false);
 
-  const [showCursor, setShowCursor] = useState<boolean>(false);
+  const [cursorBlinking, setCursorBlinking] = useState<boolean>(false);
   const [themeTextIndex, setThemeTextIndex] = useState<number>(0);
   const [highlighted, setHighlighted] = useState<boolean>(false);
-  const [deleted, setDeleted] = useState<boolean>(false);
   const [displayText, setDisplayText] = useState<string>("");
   const [displayTextIndex, setDisplayTextIndex] = useState<number>(0);
-  const [madeAMistake, setMadeAMistake] = useState<boolean>(false);
+
+  const [typingMode, setTypingMode] = useState<TypingMode>("typing");
+  const [mistakeIndex, setMistakeIndex] = useState<number | null>(null);
+  const [mistakeCount, setMistakeCount] = useState<number>(0);
 
   const timersRef = useRef<{
     deleted: ReturnType<typeof setTimeout> | null;
     newText: ReturnType<typeof setTimeout> | null;
   }>({ deleted: null, newText: null });
 
+  const showCursor = cursorBlinking || typingMode === "deleting";
+
   const currentThemeText = THEME_TEXT[currentTheme]?.primary[themeTextIndex];
   const isTyping = displayText !== currentThemeText;
   const currentSecondaryThemeText =
-    isTyping || deleted
+    isTyping || typingMode === "deleting"
       ? ""
       : THEME_TEXT[currentTheme]?.secondary?.[themeTextIndex];
+
+  const resetTypingState = useCallback(() => {
+    setDisplayText("");
+    setDisplayTextIndex(0);
+    setHighlighted(false);
+    setCursorBlinking(false);
+    setTypingMode("typing");
+    setMistakeIndex(null);
+    setMistakeCount(0);
+  }, []);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // reset
   useEffect(() => {
     setThemeTextIndex(0);
-    setDisplayText("");
-    setDisplayTextIndex(0);
-    setHighlighted(false);
-    setDeleted(false);
-  }, [currentTheme]);
+    resetTypingState();
+  }, [currentTheme, resetTypingState]);
 
   // cursor blink
   useEffect(() => {
     if (!mounted || !isValidTheme) return;
 
     const cursorBlink = setInterval(
-      () => setShowCursor((showCursor) => !showCursor),
+      () => setCursorBlinking((cursorBlinking) => !cursorBlinking),
       500,
     );
 
@@ -171,9 +183,9 @@ export const TypeWriter = () => {
   // text change
   useEffect(() => {
     if (!mounted || !isValidTheme) {
-      setShowCursor(false);
+      setCursorBlinking(false);
       setHighlighted(false);
-      setDeleted(false);
+      setTypingMode("typing");
       return;
     }
 
@@ -187,7 +199,7 @@ export const TypeWriter = () => {
       // delete
       timersRef.current.deleted = setTimeout(() => {
         setHighlighted(false);
-        setDeleted(true);
+        setTypingMode("deleting");
       }, 250);
 
       // change text and display
@@ -199,10 +211,7 @@ export const TypeWriter = () => {
           return themeTextIndex + 1;
         });
 
-        setHighlighted(false);
-        setDeleted(false);
-        setDisplayText("");
-        setDisplayTextIndex(0);
+        resetTypingState();
       }, 600);
     };
 
@@ -221,7 +230,7 @@ export const TypeWriter = () => {
         currentTimers.newText = null;
       }
     };
-  }, [currentTheme, isValidTheme, mounted]);
+  }, [currentTheme, isValidTheme, mounted, resetTypingState]);
 
   // typewriter
   useEffect(() => {
@@ -229,38 +238,61 @@ export const TypeWriter = () => {
       !mounted ||
       !isValidTheme ||
       !currentThemeText ||
-      displayText === currentThemeText
+      displayText === currentThemeText ||
+      typingMode === "deleting"
     ) {
       return;
     }
 
-    // setMadeAMistake(mistake);
+    const typingSpeed =
+      typingMode === "fixing"
+        ? 70
+        : Math.floor(Math.random() * (50 - 30 + 1)) + 30;
+    const typeWriter = setTimeout(() => {
+      setCursorBlinking(true);
 
-    const typingSpeed = Math.floor(Math.random() * (50 - 30 + 1)) + 30;
-    const typeWriter = setTimeout(
-      () => {
-        setShowCursor(true);
-        // 5% chance to make a mistake
-        if (Math.random() < 0.05 && !madeAMistake) {
-          setDisplayText((displayText) => displayText + getRandomLetter());
-          // setDisplayTextIndex((displayTextIndex) => displayTextIndex + 1);
-          setMadeAMistake(true);
-        } else {
-          if (madeAMistake) {
-            // fix it
-            setDisplayText((displayText) => displayText.slice(0, -1));
-            setMadeAMistake(false);
+      switch (typingMode) {
+        case "typing":
+          // 5% chance to make a mistake
+          if (
+            mistakeCount < 1 &&
+            mistakeIndex === null &&
+            Math.random() < 0.05
+          ) {
+            setDisplayText((displayText) => displayText + getRandomLetter());
+            setMistakeIndex(displayTextIndex);
+            setMistakeCount((mistakeCount) => mistakeCount + 1);
           } else {
-            // normal
-            setDisplayText(
-              (displayText) => displayText + currentThemeText[displayTextIndex],
-            );
-            setDisplayTextIndex((displayTextIndex) => displayTextIndex + 1);
+            // if we are 3 characters past the mistake
+            // or at the end, start fixing
+            if (
+              mistakeIndex !== null &&
+              (displayTextIndex > mistakeIndex + 3 ||
+                displayTextIndex >= currentThemeText.length)
+            ) {
+              setTypingMode("fixing");
+            } else {
+              setDisplayText(
+                (displayText) =>
+                  displayText + currentThemeText[displayTextIndex],
+              );
+              setDisplayTextIndex((displayTextIndex) => displayTextIndex + 1);
+            }
           }
-        }
-      },
-      madeAMistake ? typingSpeed * 3 : typingSpeed,
-    );
+          break;
+        case "fixing":
+          if (mistakeIndex !== null && displayText.length === mistakeIndex) {
+            setDisplayTextIndex(mistakeIndex);
+            setMistakeIndex(null);
+            setTypingMode("typing");
+          } else {
+            setDisplayText((displayText) => displayText.slice(0, -1));
+          }
+          break;
+        default:
+          return;
+      }
+    }, typingSpeed);
 
     return () => clearTimeout(typeWriter);
   }, [
@@ -269,8 +301,10 @@ export const TypeWriter = () => {
     displayText,
     displayTextIndex,
     isValidTheme,
-    madeAMistake,
+    mistakeCount,
+    mistakeIndex,
     mounted,
+    typingMode,
   ]);
 
   if (!mounted || !resolvedTheme) return null;
@@ -290,23 +324,23 @@ export const TypeWriter = () => {
         <span
           className={`flex ${highlighted ? "highlighted" : ""} ${isMultiLine ? "flex-col" : "flex-row"}`}
         >
-          {isMultiLine && !deleted ? (
+          {isMultiLine && typingMode !== "deleting" ? (
             <>
               <span>{chunk1}</span>
               <span className="flex items-center">
                 {chunk2}
                 <PiLineVerticalLight
                   size={28}
-                  className={`-ml-3 ${(showCursor || deleted) && !highlighted ? "opacity-100" : "opacity-0"}`}
+                  className={`-ml-3 ${showCursor && !highlighted ? "opacity-100" : "opacity-0"}`}
                 />
               </span>
             </>
           ) : (
             <>
-              {!deleted && displayText}
+              {typingMode !== "deleting" && displayText}
               <PiLineVerticalLight
                 size={28}
-                className={`-ml-3 -mr-4 $ ${(showCursor || deleted) && !highlighted ? "opacity-100" : "opacity-0"}`}
+                className={`-ml-3 -mr-4 $ ${showCursor && !highlighted ? "opacity-100" : "opacity-0"}`}
               />
             </>
           )}

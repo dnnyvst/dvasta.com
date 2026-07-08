@@ -1,30 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+// import { OrbitControls } from "@react-three/drei";
 import { NurtureCursorLineTrail } from "@/components";
-
-// const SpinningCube = () => {
-//   const mesh = useRef<THREE.Mesh>(null);
-
-//   useFrame(({ pointer }, delta) => {
-//     if (!mesh?.current) return;
-//     // mesh.current.rotation.y -= delta / 2;
-//     // mesh.current.rotation.z += delta / 4;
-
-//     // mesh.current.position.x = pointer.x;
-//     // mesh.current.position.y = pointer.y;
-//   });
-
-//   return (
-//     <mesh ref={mesh} castShadow>
-//       <boxGeometry />
-//       <meshStandardMaterial color="pink" />
-//     </mesh>
-//   );
-// };
 
 export const MainCanvas = () => {
   return (
@@ -39,10 +18,10 @@ export const MainCanvas = () => {
       >
         <ambientLight intensity={0.1} />
         <directionalLight color="white" position={[2, 5, 2]} castShadow />
-        <OrbitControls />
+        {/* <OrbitControls /> */}
 
         <NurtureCursorLineTrail />
-        {/* <SpinningCube /> */}
+
         {/* floor */}
         {/* <mesh
           position={[0, -3, 0]}

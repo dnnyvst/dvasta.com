@@ -1,11 +1,14 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useMouseListener } from "@/hooks";
 
 // const SpinningCube = () => {
 //   const mesh = useRef<THREE.Mesh>(null);
+
+//   const { mouse } = useThree();
 
 //   useFrame((_, delta) => {
 //     if (!mesh?.current) return;
@@ -22,6 +25,8 @@ import { Canvas, useFrame } from "@react-three/fiber";
 // };
 
 export const MainCanvas = () => {
+  // useMouseListener();
+
   return (
     <div id="main-canvas-container" className="fixed inset-0 z-0">
       <Canvas
@@ -35,6 +40,7 @@ export const MainCanvas = () => {
         <ambientLight intensity={0.1} />
         <directionalLight color="white" position={[2, 5, 2]} castShadow />
 
+        {/* <SpinningCube /> */}
         {/* floor */}
         {/* <mesh
           position={[0, -3, 0]}

@@ -54,8 +54,6 @@ export const ThemeToggle = () => {
 
   const currentThemeConfig = THEME_CONFIG[resolvedTheme || "light"];
 
-  const isMobile = window.matchMedia("(max-width: 637px)").matches;
-
   return (
     <div className="absolute right-0 flex flex-col items-end gap-2">
       <span
@@ -63,33 +61,38 @@ export const ThemeToggle = () => {
         onMouseEnter={() => setMenuOpen(true)}
         onMouseLeave={() => setMenuOpen(false)}
       >
-        {menuOpen ? (
-          <>
-            {Object.values(THEME_CONFIG).map(({ Icon, id }) => (
-              <button
-                key={id}
-                className={`pb-1 cursor-pointer border-thickness-2 ${id === currentThemeConfig.id && "border-b-2"}`}
-                onClick={() => {
-                  setTheme(id);
-                  if (isMobile) {
-                    //setMenuOpen(false);
-                    setHoveredTheme(id);
-                  }
-                }}
-                onMouseEnter={() => setHoveredTheme(id)}
-                onMouseLeave={() => setHoveredTheme(null)}
-              >
-                <Icon size={24} />
-              </button>
-            ))}
-          </>
-        ) : (
-          <currentThemeConfig.Icon
-            className={`cursor-pointer ${(currentThemeConfig.id === "light" || currentThemeConfig.id === "dark") && "animate-pulse"}`}
-            size={24}
-            onClick={() => setTheme(currentThemeConfig.id)}
-          />
-        )}
+        <div
+          className={`
+        pt-1 flex overflow-hidden transition-all duration-300 ease-in-out items-center
+        ${
+          menuOpen
+            ? "max-w-64 opacity-100 translate-x-0"
+            : "max-w-0 opacity-0 translate-x-4"
+        }
+        flex-col-reverse gap-4
+        sm:flex-row
+      `}
+        >
+          {Object.values(THEME_CONFIG).map(({ Icon, id }) => (
+            <button
+              key={id}
+              className={`pb-1 cursor-pointer border-thickness-2 ${
+                id === currentThemeConfig.id
+                  ? "border-b-2 disabled opacity-50"
+                  : ""
+              }`}
+              onClick={() => setTheme(id)}
+              onMouseEnter={() => setHoveredTheme(id)}
+              onMouseLeave={() => setHoveredTheme(null)}
+            >
+              <Icon size={24} />
+            </button>
+          ))}
+        </div>
+        <currentThemeConfig.Icon
+          className={`cursor-pointer ${(currentThemeConfig.id === "light" || currentThemeConfig.id === "dark") && "animate-pulse"}`}
+          size={24}
+        />
       </span>
       {hoveredTheme && (
         <div

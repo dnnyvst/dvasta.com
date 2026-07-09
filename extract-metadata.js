@@ -16,31 +16,52 @@ const VERTICAL = [
   "1689",
 ];
 
-const ddtodms = (dd, ref) => {
-  const original = parseFloat(dd);
-  const absolute = Math.abs(original);
+// const ddtodms = (dd, ref) => {
+//   if (!dd || !ref) return undefined;
 
-  const d = Math.floor(absolute);
+//   const original = parseFloat(dd);
+//   const absolute = Math.abs(original);
 
-  const m = (absolute - d) * 60;
-  const mTruncated = Math.floor(m);
+//   const d = Math.floor(absolute);
 
-  const s = parseFloat((m - mTruncated) * 60);
+//   const m = (absolute - d) * 60;
+//   const mTruncated = Math.floor(m);
 
-  const degrees = String(d).padStart(2, "0");
-  const minutes = String(mTruncated).padStart(2, "0");
-  const seconds = s.toFixed(s < 10 ? 3 : 2);
+//   const s = parseFloat((m - mTruncated) * 60);
 
-  const refString = String(ref).toLowerCase();
-  const direction = refString.includes("north")
-    ? "N"
-    : refString.includes("south")
-      ? "S"
-      : refString.includes("east")
-        ? "E"
-        : "W";
+//   const degrees = String(d).padStart(2, "0");
+//   const minutes = String(mTruncated).padStart(2, "0");
+//   const seconds = s.toFixed(s < 10 ? 3 : 2);
 
-  return { degrees, minutes, seconds, direction };
+//   const refString = String(ref).toLowerCase();
+//   const direction = refString.includes("north")
+//     ? "N"
+//     : refString.includes("south")
+//       ? "S"
+//       : refString.includes("east")
+//         ? "E"
+//         : "W";
+
+//   return { degrees, minutes, seconds, direction };
+// };
+
+const datetodms = (dateString) => {
+  const [date, time] = dateString.split(" ");
+
+  // date format
+  const [s, d, m] = date.split(":");
+  const sEdited = `${s.substring(0, 2)}.${s.substring(2)}`;
+
+  // time format
+  let [td, mm, ss] = time.split(":");
+  //   if (parseInt(td) > 12) {
+  //     td = String(parseInt(td) - 12).padStart(2, "0");
+  //   }
+
+  return {
+    lat: { d, m, s: sEdited, direction: "N" },
+    long: { d: td, m: mm, s: ss, direction: "W" },
+  };
 };
 
 async function extractMetadata() {
@@ -58,25 +79,29 @@ async function extractMetadata() {
 
     try {
       const tags = await ExifReader.load(filePath);
-      if (num === "8193") {
-        console.log(tags);
-      }
+      //   if (num === "8193") {
+      //     console.log(tags);
+      //   }
       metadata[num] = {
         date: {
           date:
             num === "8193"
-              ? "2024:07:26"
+              ? "2024:07:26 20:49:12"
               : tags["DateTimeOriginal"]?.description,
-          coords: "",
+          coords: datetodms(
+            num === "8193"
+              ? "2024:07:26 20:49:12"
+              : tags["DateTimeOriginal"]?.description,
+          ),
         },
-        latitude: ddtodms(
-          tags["GPSLatitude"]?.description,
-          tags["GPSLatitudeRef"]?.description,
-        ),
-        longitude: ddtodms(
-          tags["GPSLongitude"]?.description,
-          tags["GPSLongitudeRef"]?.description,
-        ),
+        // latitude: ddtodms(
+        //   tags["GPSLatitude"]?.description,
+        //   tags["GPSLatitudeRef"]?.description,
+        // ),
+        // longitude: ddtodms(
+        //   tags["GPSLongitude"]?.description,
+        //   tags["GPSLongitudeRef"]?.description,
+        // ),
         model: tags["Model"]?.description,
         exposureTime: tags["ExposureTime"]?.description,
         fNumber: tags["FNumber"]?.description,

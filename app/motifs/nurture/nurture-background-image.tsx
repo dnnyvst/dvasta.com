@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { useEffect, useState } from "react";
@@ -32,20 +33,30 @@ const VerticalImage = ({ url }: { url: string }) => (
 export const NurtureBackgroundImage = () => {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState<boolean>(false);
+  const [orientation, setOrientation] = useState<string>(() =>
+    Math.random() < 0.6 ? "horizontal" : "vertical",
+  );
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    setOrientation(() => (Math.random() < 0.6 ? "horizontal" : "vertical"));
+  }, [resolvedTheme]);
 
   // todo
   // pick random images
 
   if (!mounted || !resolvedTheme?.includes("nurture")) return null;
+
   return (
     <>
-      <SplitHorizontalImage url={HORIZONTAL_IMAGES[0]} />
-      {/* <VerticalImage url={VERTICAL_IMAGES[0]} /> */}
+      {orientation === "horizontal" ? (
+        <SplitHorizontalImage url={HORIZONTAL_IMAGES[0]} />
+      ) : (
+        <VerticalImage url={VERTICAL_IMAGES[0]} />
+      )}
     </>
   );
 };

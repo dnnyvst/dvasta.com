@@ -30,6 +30,15 @@ const VerticalImage = ({ url }: { url: string }) => (
   </div>
 );
 
+const getImageIndex = (orientation: string) => {
+  const maxLength =
+    orientation === "horizontal"
+      ? HORIZONTAL_IMAGES.length
+      : VERTICAL_IMAGES.length;
+
+  return Math.floor(Math.random() * maxLength);
+};
+
 export const NurtureBackgroundImage = () => {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState<boolean>(false);
@@ -53,9 +62,11 @@ export const NurtureBackgroundImage = () => {
   return (
     <>
       {orientation === "horizontal" ? (
-        <SplitHorizontalImage url={HORIZONTAL_IMAGES[0]} />
+        <SplitHorizontalImage
+          url={HORIZONTAL_IMAGES[getImageIndex(orientation)]}
+        />
       ) : (
-        <VerticalImage url={VERTICAL_IMAGES[0]} />
+        <VerticalImage url={VERTICAL_IMAGES[getImageIndex(orientation)]} />
       )}
     </>
   );

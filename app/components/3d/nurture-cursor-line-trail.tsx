@@ -1,13 +1,16 @@
 "use client";
 
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
+import { useTheme } from "next-themes";
 
 const MAX_POINTS = 180;
 
 export const NurtureCursorLineTrail = () => {
-  const lineRef = useRef<THREE.Line>(null);
+  const { resolvedTheme } = useTheme();
+
+  const lineRef = useRef<THREE.Line | null>(null);
   const points = useRef<THREE.Vector3[]>(
     Array.from({ length: MAX_POINTS }, () => new THREE.Vector3(0, 0, 0)),
   );
@@ -40,9 +43,10 @@ export const NurtureCursorLineTrail = () => {
       }
       hasMoved.current = true;
     } else {
-      // remove oldest, add newest
-      points.current.shift();
-      points.current.push(new THREE.Vector3(targetX, targetY, 0));
+      // remove oldest and add newest while reusing the vector
+      const newPoint = points.current.shift()!;
+      newPoint.set(targetX, targetY, 0);
+      points.current.push(newPoint);
     }
 
     const geometry = lineRef.current.geometry;
@@ -59,10 +63,17 @@ export const NurtureCursorLineTrail = () => {
     geometry.computeBoundingSphere();
   });
 
-  return (
-    <line ref={lineRef}>
-      <bufferGeometry onUpdate={(self) => self.setFromPoints(points.current)} />
-      <lineBasicMaterial color="white" />
-    </line>
-  );
+  const line = useMemo(() => {
+    const geometry = new THREE.BufferGeometry();
+    // eslint-disable-next-line react-hooks/refs
+    geometry.setFromPoints(points.current);
+
+    const material = new THREE.LineBasicMaterial({
+      color: resolvedTheme === "nurture-dark" ? "white" : "black",
+    });
+
+    return new THREE.Line(geometry, material);
+  }, [resolvedTheme]);
+
+  return <primitive ref={lineRef} object={line} />;
 };

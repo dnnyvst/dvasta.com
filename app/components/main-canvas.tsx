@@ -4,8 +4,11 @@ import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
 // import { OrbitControls } from "@react-three/drei";
 import { NurtureCursorLineTrail } from "@/components";
+import { useTheme } from "next-themes";
 
 export const MainCanvas = () => {
+  const { resolvedTheme } = useTheme();
+
   return (
     <div id="main-canvas-container" className="fixed inset-0 z-0">
       <Canvas
@@ -16,11 +19,11 @@ export const MainCanvas = () => {
         shadows={{ type: THREE.PCFShadowMap }}
         camera={{ position: [0, 0, 1] }}
       >
-        <ambientLight intensity={0.1} />
-        <directionalLight color="white" position={[2, 5, 2]} castShadow />
+        {/* <ambientLight intensity={0.1} />
+        <directionalLight color="white" position={[2, 5, 2]} castShadow /> */}
         {/* <OrbitControls /> */}
 
-        <NurtureCursorLineTrail />
+        {resolvedTheme?.includes("nurture") && <NurtureCursorLineTrail />}
 
         {/* floor */}
         {/* <mesh

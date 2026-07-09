@@ -10,33 +10,45 @@ const HORIZONTAL_POSITION =
 const VERTICAL_POSITION =
   "bg-top-left absolute right-[20vw] left-[45vw] top-[35vh] bottom-[0vh] bg-no-repeat bg-cover";
 
-const HORIZONTAL_IMAGES: string[] = [
-  "https://t3.ftcdn.net/jpg/03/56/65/84/360_F_356658435_0RmzeYwPk0NwdHPXSHM4CSMbevQ493v0.jpg",
-];
+const getImageUrls = (imgNumbers: string[], orientation: string): string[] =>
+  imgNumbers.map((number) => `/cameraroll/${orientation}/IMG_${number}.webp`);
 
-const VERTICAL_IMAGES: string[] = [
-  "https://t3.ftcdn.net/jpg/03/56/65/84/360_F_356658435_0RmzeYwPk0NwdHPXSHM4CSMbevQ493v0.jpg",
-];
+const HORIZONTAL_IMAGES: string[] = getImageUrls(
+  ["1093", "2111", "2235", "7549", "7624", "8126", "8288"],
+  "horizontal",
+);
+
+const VERTICAL_IMAGES: string[] = getImageUrls(
+  ["0391", "1028", "8119", "8165", "8175", "8193", "8287"],
+  "vertical",
+);
 
 const SplitHorizontalImage = ({ url }: { url: string }) => (
-  <div className={`${HORIZONTAL_POSITION} bg-[url(${url})]`}>
+  <div
+    className={HORIZONTAL_POSITION}
+    style={{ backgroundImage: `url("${url}")` }}
+  >
     <div className="absolute w-[23%] h-full bg-background ml-[30%]" />
   </div>
 );
 
 const VerticalImage = ({ url }: { url: string }) => (
-  <div className={`${VERTICAL_POSITION} bg-[url(${url})]`}>
-    {/* <div className="absolute w-[25%] h-full bg-background ml-[30%]" /> */}
-  </div>
+  <div
+    className={VERTICAL_POSITION}
+    style={{ backgroundImage: `url("${url}")` }}
+  />
 );
 
-const getImageIndex = (orientation: string) => {
+const getRandomImage = (orientation: string) => {
   const maxLength =
     orientation === "horizontal"
       ? HORIZONTAL_IMAGES.length
       : VERTICAL_IMAGES.length;
+  const index = Math.floor(Math.random() * maxLength);
 
-  return Math.floor(Math.random() * maxLength);
+  return orientation === "horizontal"
+    ? HORIZONTAL_IMAGES[index]
+    : VERTICAL_IMAGES[index];
 };
 
 export const NurtureBackgroundImage = () => {
@@ -54,19 +66,16 @@ export const NurtureBackgroundImage = () => {
     setOrientation(() => (Math.random() < 0.6 ? "horizontal" : "vertical"));
   }, [resolvedTheme]);
 
-  // todo
-  // pick random images
-
   if (!mounted || !resolvedTheme?.includes("nurture")) return null;
+
+  const image = getRandomImage(orientation);
 
   return (
     <>
       {orientation === "horizontal" ? (
-        <SplitHorizontalImage
-          url={HORIZONTAL_IMAGES[getImageIndex(orientation)]}
-        />
+        <SplitHorizontalImage url={image} />
       ) : (
-        <VerticalImage url={VERTICAL_IMAGES[getImageIndex(orientation)]} />
+        <VerticalImage url={image} />
       )}
     </>
   );

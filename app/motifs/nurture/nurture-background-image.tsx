@@ -8,6 +8,7 @@ const HORIZONTAL_POSITION =
   "bg-center absolute right-0 top-[45vh] bottom-[20vh] w-[clamp(58vw,75vw,900px)] bg-no-repeat bg-cover";
 const VERTICAL_POSITION =
   "bg-top-left absolute right-[5vw] top-[35vh] h-[65vh] w-[clamp(55vw,70vw,600px)] bg-no-repeat bg-cover md:right-[20vw] md:left-[45vw] md:bottom-0 md:top-[35vh] md:h-auto md:w-auto";
+
 const getImageUrls = (imgNumbers: string[], orientation: string): string[] =>
   imgNumbers.map((number) => `/cameraroll/${orientation}/IMG_${number}.webp`);
 
@@ -17,7 +18,7 @@ const HORIZONTAL_IMAGES: string[] = getImageUrls(
 );
 
 const VERTICAL_IMAGES: string[] = getImageUrls(
-  ["0391", "1028", "8119", "8165", "8175", "8193", "8287"],
+  ["0391", "1028", "8119", "8165", "8175", "8193", "8287", "1665", "1689"],
   "vertical",
 );
 

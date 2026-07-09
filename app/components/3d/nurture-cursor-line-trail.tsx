@@ -4,7 +4,7 @@ import { useRef } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 
-const MAX_POINTS = 100;
+const MAX_POINTS = 180;
 
 export const NurtureCursorLineTrail = () => {
   const lineRef = useRef<THREE.Line>(null);

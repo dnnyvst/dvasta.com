@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useRef } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
+import { Line } from "@react-three/drei";
 import { useTheme } from "next-themes";
 
 const MAX_POINTS = 180;
@@ -10,7 +12,8 @@ const MAX_POINTS = 180;
 export const NurtureCursorLineTrail = () => {
   const { resolvedTheme } = useTheme();
 
-  const lineRef = useRef<THREE.Line | null>(null);
+  const lineRef = useRef<any>(null);
+
   const points = useRef<THREE.Vector3[]>(
     Array.from({ length: MAX_POINTS }, () => new THREE.Vector3(0, 0, 0)),
   );
@@ -41,6 +44,7 @@ export const NurtureCursorLineTrail = () => {
       for (let i = 0; i < MAX_POINTS; i++) {
         points.current[i].set(targetX, targetY, 0);
       }
+
       hasMoved.current = true;
     } else {
       // remove oldest and add newest while reusing the vector
@@ -49,31 +53,42 @@ export const NurtureCursorLineTrail = () => {
       points.current.push(newPoint);
     }
 
-    const geometry = lineRef.current.geometry;
-    const position = geometry.getAttribute("position") as THREE.BufferAttribute;
+    // const geometry = lineRef.current.geometry;
+    // const position = geometry.getAttribute("position") as THREE.BufferAttribute;
 
-    if (position) {
-      for (let i = 0; i < points.current.length; i++) {
-        const point = points.current[i];
-        position.setXYZ(i, point.x, point.y, point.z);
-      }
-      position.needsUpdate = true;
-    }
+    // if (position) {
+    //   for (let i = 0; i < points.current.length; i++) {
+    //     const point = points.current[i];
+    //     position.setXYZ(i, point.x, point.y, point.z);
+    //   }
+    //   position.needsUpdate = true;
+    // }
 
-    geometry.computeBoundingSphere();
+    // geometry.computeBoundingSphere();
+    lineRef.current.geometry.setPositions(
+      points.current.flatMap((point) => [point.x, point.y, point.z]),
+    );
   });
 
-  const line = useMemo(() => {
-    const geometry = new THREE.BufferGeometry();
-    // eslint-disable-next-line react-hooks/refs
-    geometry.setFromPoints(points.current);
+  // const line = useMemo(() => {
+  //   const geometry = new THREE.BufferGeometry();
+  //   // eslint-disable-next-line react-hooks/refs
+  //   geometry.setFromPoints(points.current);
 
-    const material = new THREE.LineBasicMaterial({
-      color: resolvedTheme === "nurture-dark" ? "white" : "black",
-    });
+  //   const material = new THREE.LineBasicMaterial({
+  //     color: resolvedTheme === "nurture-dark" ? "white" : "black",
+  //   });
 
-    return new THREE.Line(geometry, material);
-  }, [resolvedTheme]);
+  //   return new THREE.Line(geometry, material);
+  // }, [resolvedTheme]);
 
-  return <primitive ref={lineRef} object={line} />;
+  return (
+    <Line
+      ref={lineRef}
+      // eslint-disable-next-line react-hooks/refs
+      points={points.current}
+      color={resolvedTheme === "nurture-dark" ? "white" : "black"}
+      transparent
+    />
+  );
 };

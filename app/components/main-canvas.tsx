@@ -3,7 +3,7 @@
 import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
 // import { OrbitControls } from "@react-three/drei";
-import { NurtureCursorLineTrail } from "@/components";
+import { NurtureCursorLineTrail } from "@/motifs";
 import { useTheme } from "next-themes";
 
 export const MainCanvas = () => {

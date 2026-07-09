@@ -7,7 +7,7 @@ import { useTheme } from "next-themes";
 const HORIZONTAL_POSITION =
   "bg-center absolute right-0 top-[45vh] bottom-[20vh] w-[clamp(58vw,75vw,900px)] bg-no-repeat bg-cover";
 const VERTICAL_POSITION =
-  "bg-top-left absolute right-[20vw] left-[45vw] top-[35vh] bottom-[0vh] bg-no-repeat bg-cover";
+  "bg-top-left absolute right-[5vw] top-[35vh] h-[65vh] w-[clamp(55vw,35vw,600px)] bg-no-repeat bg-cover md:right-[20vw] md:left-[45vw] md:bottom-0 md:top-[35vh] md:h-auto md:w-auto";
 
 const getImageUrls = (imgNumbers: string[], orientation: string): string[] =>
   imgNumbers.map((number) => `/cameraroll/${orientation}/IMG_${number}.webp`);

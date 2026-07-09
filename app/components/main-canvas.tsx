@@ -10,7 +10,7 @@ export const MainCanvas = () => {
   const { resolvedTheme } = useTheme();
 
   return (
-    <div id="main-canvas-container" className="fixed inset-0 z-0">
+    <div id="main-canvas-container" className="fixed inset-0 z-10">
       <Canvas
         gl={{
           alpha: true,

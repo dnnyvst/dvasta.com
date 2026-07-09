@@ -49,8 +49,8 @@ export default function RootLayout({
             </main>
           </div>
           <MainCanvas />
-          {/* <div className="bg-bottom-left absolute right-[-10%] left-[45%] top-[35%] bottom-[10%] border bg-[url(https://t3.ftcdn.net/jpg/03/56/65/84/360_F_356658435_0RmzeYwPk0NwdHPXSHM4CSMbevQ493v0.jpg)] bg-no-repeat bg-cover"></div> */}
-          {/* <div className="bg-bottom-left absolute right-[20%] left-[45%] top-[45%] bottom-[-5%] border bg-[url(https://t3.ftcdn.net/jpg/03/56/65/84/360_F_356658435_0RmzeYwPk0NwdHPXSHM4CSMbevQ493v0.jpg)] bg-no-repeat bg-cover"></div> */}
+          {/* <div className="bg-bottom-left absolute right-[-10vw] left-[42vw] top-[35vh] bottom-[10vh] bg-[url(https://t3.ftcdn.net/jpg/03/56/65/84/360_F_356658435_0RmzeYwPk0NwdHPXSHM4CSMbevQ493v0.jpg)] bg-no-repeat bg-cover"></div> */}
+          {/* <div className="bg-bottom-left absolute right-[20vw] left-[45vw] top-[45vh] bottom-[-5vh] bg-[url(https://t3.ftcdn.net/jpg/03/56/65/84/360_F_356658435_0RmzeYwPk0NwdHPXSHM4CSMbevQ493v0.jpg)] bg-no-repeat bg-cover"></div> */}
         </ThemeProvider>
       </body>
     </html>

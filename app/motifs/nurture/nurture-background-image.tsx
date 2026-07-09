@@ -5,8 +5,7 @@ import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 
 const HORIZONTAL_POSITION =
-  "bg-center absolute right-[0vw] left-[42vw] top-[45vh] bottom-[20vh] bg-no-repeat bg-cover";
-
+  "bg-center absolute right-0 top-[45vh] bottom-[20vh] w-[clamp(58vw,75vw,900px)] bg-no-repeat bg-cover";
 const VERTICAL_POSITION =
   "bg-top-left absolute right-[20vw] left-[45vw] top-[35vh] bottom-[0vh] bg-no-repeat bg-cover";
 

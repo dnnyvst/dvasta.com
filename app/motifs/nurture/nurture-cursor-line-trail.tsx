@@ -3,14 +3,20 @@
 
 import { useRef } from "react";
 import * as THREE from "three";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { Line } from "@react-three/drei";
 import { useTheme } from "next-themes";
 
 const MAX_POINTS = 180;
 
+const Y_AXIS = new THREE.Vector3(0, 1, 0);
+const raycaster = new THREE.Raycaster();
+const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+const intersection = new THREE.Vector3();
+
 export const NurtureCursorLineTrail = () => {
   const { resolvedTheme } = useTheme();
+  const { camera } = useThree();
 
   const lineRef = useRef<any>(null);
 
@@ -20,20 +26,43 @@ export const NurtureCursorLineTrail = () => {
 
   const hasMoved = useRef<boolean>(false);
   const lastMousePosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const frameCount = useRef(0);
 
-  useFrame(({ pointer, viewport }) => {
+  useFrame(({ pointer }, delta) => {
     if (!lineRef.current) return;
 
-    // convert normalized coordinates to viewport coordinates
-    const targetX = (pointer.x * viewport.width) / 2;
-    const targetY = (pointer.y * viewport.height) / 2;
+    // rotate that point around the Y axis
+    camera.position.applyAxisAngle(Y_AXIS, delta * 0.25);
+    // apply to camera
+    camera.lookAt(0, 0, 0);
 
     if (
-      targetX === lastMousePosition.current.x &&
-      targetY === lastMousePosition.current.y
+      pointer.x === lastMousePosition.current.x &&
+      pointer.y === lastMousePosition.current.y
     ) {
       return;
     }
+
+    frameCount.current++;
+
+    if (frameCount.current % 3 !== 0) {
+      return;
+    }
+
+    raycaster.setFromCamera(pointer, camera);
+    raycaster.ray.intersectPlane(plane, intersection);
+    const targetX = intersection.x;
+    const targetY = intersection.y;
+    const targetZ = intersection.z;
+
+    camera.getWorldDirection(intersection);
+
+    plane.setFromNormalAndCoplanarPoint(
+      camera.getWorldDirection(new THREE.Vector3()),
+      camera.position
+        .clone()
+        .add(camera.getWorldDirection(new THREE.Vector3()).multiplyScalar(5)),
+    );
 
     lastMousePosition.current.x = targetX;
     lastMousePosition.current.y = targetY;
@@ -42,45 +71,21 @@ export const NurtureCursorLineTrail = () => {
       if (pointer.x === 0 && pointer.y === 0) return;
 
       for (let i = 0; i < MAX_POINTS; i++) {
-        points.current[i].set(targetX, targetY, 0);
+        points.current[i].set(targetX, targetY, targetZ);
       }
 
       hasMoved.current = true;
     } else {
       // remove oldest and add newest while reusing the vector
       const newPoint = points.current.shift()!;
-      newPoint.set(targetX, targetY, 0);
+      newPoint.set(targetX, targetY, targetZ);
       points.current.push(newPoint);
     }
 
-    // const geometry = lineRef.current.geometry;
-    // const position = geometry.getAttribute("position") as THREE.BufferAttribute;
-
-    // if (position) {
-    //   for (let i = 0; i < points.current.length; i++) {
-    //     const point = points.current[i];
-    //     position.setXYZ(i, point.x, point.y, point.z);
-    //   }
-    //   position.needsUpdate = true;
-    // }
-
-    // geometry.computeBoundingSphere();
     lineRef.current.geometry.setPositions(
       points.current.flatMap((point) => [point.x, point.y, point.z]),
     );
   });
-
-  // const line = useMemo(() => {
-  //   const geometry = new THREE.BufferGeometry();
-  //   // eslint-disable-next-line react-hooks/refs
-  //   geometry.setFromPoints(points.current);
-
-  //   const material = new THREE.LineBasicMaterial({
-  //     color: resolvedTheme === "nurture-dark" ? "white" : "black",
-  //   });
-
-  //   return new THREE.Line(geometry, material);
-  // }, [resolvedTheme]);
 
   return (
     <Line
@@ -88,7 +93,6 @@ export const NurtureCursorLineTrail = () => {
       // eslint-disable-next-line react-hooks/refs
       points={points.current}
       color={resolvedTheme === "nurture-dark" ? "white" : "black"}
-      transparent
     />
   );
 };

@@ -6,15 +6,7 @@ import { useEffect, useRef, useState, type FC } from "react";
 import { useTheme } from "next-themes";
 import { PiLineVerticalLight } from "react-icons/pi";
 
-const HORIZONTAL_POSITION =
-  "bg-center absolute right-0 top-[45vh] bottom-[20vh] w-[clamp(58vw,75vw,900px)] bg-no-repeat bg-cover overflow-x-clip";
-const VERTICAL_POSITION =
-  "bg-top-left absolute right-[5vw] top-[35vh] h-[65vh] w-[clamp(55vw,70vw,600px)] bg-no-repeat bg-cover md:right-[12vw] md:left-[45vw] md:bottom-0 md:top-[35vh] md:h-auto md:w-auto";
-
 import imageMetadata from "./image-metadata.json" with { type: "json" };
-
-const getImageUrl = (imageNumber: string, orientation: string): string =>
-  `/cameraroll/${orientation}/IMG_${imageNumber}.webp`;
 
 const HORIZONTAL_IMAGES: string[] = [
   "1093",
@@ -37,6 +29,14 @@ const VERTICAL_IMAGES: string[] = [
   "1665",
   "1689",
 ];
+
+const HORIZONTAL_POSITION =
+  "bg-center absolute right-0 top-[45vh] bottom-[20vh] w-[clamp(58vw,75vw,900px)] bg-no-repeat bg-cover overflow-x-clip";
+const VERTICAL_POSITION =
+  "bg-top-left absolute right-[5vw] top-[35vh] h-[65vh] w-[clamp(55vw,70vw,600px)] bg-no-repeat bg-cover md:right-[12vw] md:left-[45vw] md:bottom-0 md:top-[35vh] md:h-auto md:w-auto";
+
+const getImageUrl = (imageNumber: string, orientation: string): string =>
+  `/cameraroll/${orientation}/IMG_${imageNumber}.webp`;
 
 type ImageMetadata = {
   date: {
@@ -109,23 +109,17 @@ const SplitHorizontalImage = ({ image }: { image: string }) => {
       <div className="whitespace-nowrap relative left-[53%] flex flex-col font-sans text-xs font-light bottom-18 md:bottom-13">
         <span className="relative flex gap-1 md:flex-row md:items-center md:gap-1 opacity-70">
           <span className="hidden gap-1 sm:flex">
-            Color space:
-            <span className="italic font-iwata">{metadata.colorSpace}.</span>
-            Color profile:
-            <span className="italic font-iwata">{metadata.colorProfile}.</span>
+            Color space: <ImageValue>{metadata.colorSpace}</ImageValue>
+            Color profile: <ImageValue>{metadata.colorProfile}</ImageValue>
           </span>
-          Focal length:
-          <span className="italic font-iwata">{metadata.focalLength}.</span>
+          Focal length: <ImageValue>{metadata.focalLength}</ImageValue>
         </span>
         <span className="relative flex gap-1 md:flex-row md:items-center md:gap-1 opacity-70">
           <span className="hidden gap-1 sm:flex">
-            Metering mode:
-            <span className="italic font-iwata">{metadata.meteringMode}.</span>
+            Metering mode: <ImageValue>{metadata.meteringMode}</ImageValue>
           </span>
-          F number:
-          <span className="italic font-iwata">{metadata.fNumber}.</span>
-          Exposure time:
-          <span className="italic font-iwata">{metadata.exposureTime}.</span>
+          F number: <ImageValue>{metadata.fNumber}</ImageValue>
+          Exposure time: <ImageValue>{metadata.exposureTime}</ImageValue>
         </span>
       </div>
     </div>
@@ -156,20 +150,14 @@ const VerticalImage = ({ image }: { image: string }) => {
       {/* other meta */}
       <div className="[writing-mode:vertical-rl] -right-4 sm:gap-0 gap-1 sm:-right-8 absolute top-0 flex sm:flex-col font-sans text-xs font-light whitespace-nowrap">
         <span className="relative flex gap-1 md:flex-row md:items-center md:gap-1 opacity-70">
-          Color space:
-          <span className="italic font-iwata">{metadata.colorSpace}.</span>
-          Color profile:
-          <span className="italic font-iwata">{metadata.colorProfile}.</span>
-          Focal length:
-          <span className="italic font-iwata">{metadata.focalLength}.</span>
+          Color space: <ImageValue>{metadata.colorSpace}</ImageValue>
+          Color profile: <ImageValue>{metadata.colorProfile}</ImageValue>
+          Focal length: <ImageValue>{metadata.focalLength}</ImageValue>
         </span>
         <span className="relative flex gap-1 md:flex-row md:items-center md:gap-1 opacity-70">
-          Metering mode:
-          <span className="italic font-iwata">{metadata.meteringMode}.</span>F
-          number:
-          <span className="italic font-iwata">{metadata.fNumber}.</span>
-          Exposure time:
-          <span className="italic font-iwata">{metadata.exposureTime}.</span>
+          Metering mode: <ImageValue>{metadata.meteringMode}</ImageValue>F
+          number: <ImageValue>{metadata.fNumber}</ImageValue>
+          Exposure time: <ImageValue>{metadata.exposureTime}</ImageValue>
         </span>
       </div>
     </div>
@@ -193,6 +181,19 @@ const getRandomImage = (orientation: string, currentImage: string) => {
     ? availableHorizontalImages[index]
     : availableVerticalImages[index];
 };
+
+type ImageOrientation = "horizontal" | "vertical";
+
+interface ImageProps {
+  image: string;
+}
+
+// const getMetadata = (image: string): ImageMetadata =>
+//   (imageMetadata as Record<string, ImageMetadata>)[image];
+
+const ImageValue = ({ children }: { children: React.ReactNode }) => (
+  <span className="italic font-iwata">{children}.</span>
+);
 
 export const NurtureBackgroundImage = () => {
   const { resolvedTheme } = useTheme();

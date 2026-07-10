@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
-import { useEffect, useState, type FC } from "react";
+import { useEffect, useRef, useState, type FC } from "react";
 import { useTheme } from "next-themes";
 import { PiLineVerticalLight } from "react-icons/pi";
 
@@ -176,36 +176,47 @@ const VerticalImage = ({ image }: { image: string }) => {
   );
 };
 
-const getRandomImage = (orientation: string) => {
+const getRandomImage = (orientation: string, currentImage: string) => {
+  const availableHorizontalImages = HORIZONTAL_IMAGES.filter(
+    (img) => img !== currentImage,
+  );
+  const availableVerticalImages = VERTICAL_IMAGES.filter(
+    (img) => img !== currentImage,
+  );
   const maxLength =
     orientation === "horizontal"
-      ? HORIZONTAL_IMAGES.length
-      : VERTICAL_IMAGES.length;
+      ? availableHorizontalImages.length
+      : availableVerticalImages.length;
   const index = Math.floor(Math.random() * maxLength);
 
   return orientation === "horizontal"
-    ? HORIZONTAL_IMAGES[index]
-    : VERTICAL_IMAGES[index];
+    ? availableHorizontalImages[index]
+    : availableVerticalImages[index];
 };
 
 export const NurtureBackgroundImage = () => {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState<boolean>(false);
   const [orientation, setOrientation] = useState<string>(() =>
-    Math.random() < 0.6 ? "horizontal" : "vertical",
+    Math.random() < 0.5 ? "horizontal" : "vertical",
   );
+
+  const [image, setImage] = useState<string>("");
 
   useEffect(() => {
     setMounted(true);
-  }, []);
 
-  useEffect(() => {
-    setOrientation(() => (Math.random() < 0.6 ? "horizontal" : "vertical"));
-  }, [resolvedTheme]);
+    const changeImage = () => {
+      const newOrientation = Math.random() < 0.5 ? "horizontal" : "vertical";
+      setOrientation(newOrientation);
+      setImage(getRandomImage(newOrientation, image));
+    };
+    const imageRotation = setTimeout(changeImage, !mounted ? 0 : 8000);
 
-  if (!mounted || !resolvedTheme?.includes("nurture")) return null;
+    return () => clearTimeout(imageRotation);
+  }, [image, mounted]);
 
-  const image = getRandomImage(orientation);
+  if (!mounted || !resolvedTheme?.includes("nurture") || !image) return null;
 
   return (
     <>

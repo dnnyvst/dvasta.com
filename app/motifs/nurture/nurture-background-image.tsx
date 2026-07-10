@@ -63,6 +63,9 @@ type ImageMetadata = {
   focalLength: string;
 };
 
+const getMetadata = (image: string): ImageMetadata =>
+  (imageMetadata as Record<string, ImageMetadata>)[image];
+
 interface DateCoordProps {
   d: string;
   m: string;
@@ -79,9 +82,7 @@ const DateCoord: FC<DateCoordProps> = ({ d, m, s, direction }) => {
 
 const SplitHorizontalImage = ({ image }: { image: string }) => {
   const url = getImageUrl(image, "horizontal");
-  const metadata = (imageMetadata as unknown as Record<string, ImageMetadata>)[
-    image
-  ];
+  const metadata = getMetadata(image);
 
   return (
     <div
@@ -128,9 +129,7 @@ const SplitHorizontalImage = ({ image }: { image: string }) => {
 
 const VerticalImage = ({ image }: { image: string }) => {
   const url = getImageUrl(image, "vertical");
-  const metadata = (imageMetadata as unknown as Record<string, ImageMetadata>)[
-    image
-  ];
+  const metadata = getMetadata(image);
 
   return (
     <div
@@ -187,9 +186,6 @@ type ImageOrientation = "horizontal" | "vertical";
 interface ImageProps {
   image: string;
 }
-
-// const getMetadata = (image: string): ImageMetadata =>
-//   (imageMetadata as Record<string, ImageMetadata>)[image];
 
 const ImageValue = ({ children }: { children: React.ReactNode }) => (
   <span className="italic font-iwata">{children}.</span>

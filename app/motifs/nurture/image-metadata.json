@@ -329,7 +329,10 @@
         }
       }
     },
-    "focalLength": "NaN mm",
+    "exposureTime": "1/???",
+    "fNumber": "f/???",
+    "meteringMode": "???",
+    "focalLength": "??? mm",
     "colorSpace": "RGB ",
     "colorProfile": "Display P3"
   },

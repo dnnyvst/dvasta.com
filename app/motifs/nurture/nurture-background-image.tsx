@@ -115,7 +115,7 @@ const SplitHorizontalImage: FC<ImageProps> = ({ image }) => {
     <BackgroundImage className={HORIZONTAL_POSITION} url={url}>
       <div className="absolute w-[23%] h-full bg-background ml-[30%]" />
       {/* date coords */}
-      <span className="text-sm relative left-[53%] flex flex-col-reverse md:flex-row-reverse md:justify-end md:items-center gap-0 md:gap-1 top-76 opacity-70">
+      <span className="text-sm relative left-[53%] flex flex-col-reverse md:flex-row-reverse md:justify-end md:items-center gap-0 md:gap-1 top-59 xs:top-76 opacity-70">
         <span className="flex gap-0 md:gap-1">
           <PiLineVerticalLight
             size={20}

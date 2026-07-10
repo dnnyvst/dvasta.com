@@ -82,7 +82,7 @@ const SplitHorizontalImage = ({ image }: { image: string }) => {
   const metadata = (imageMetadata as unknown as Record<string, ImageMetadata>)[
     image
   ];
-  console.log(metadata);
+
   return (
     <div
       className={HORIZONTAL_POSITION}
@@ -94,7 +94,7 @@ const SplitHorizontalImage = ({ image }: { image: string }) => {
         <span className="flex gap-0 md:gap-1">
           <PiLineVerticalLight
             size={20}
-            className="-mx-2.5 mr-2.5 md:mr-0 md:mx-auto"
+            className="-mx-2.25 mr-2.75 md:mr-0 md:mx-auto"
           />
           <DateCoord {...metadata.date.coords.long} />
           <PiLineVerticalLight size={20} />
@@ -144,7 +144,7 @@ const VerticalImage = ({ image }: { image: string }) => {
       style={{ backgroundImage: `url("${url}")` }}
     >
       {/* date coords */}
-      <span className="relative left-0 flex items-center gap-0 text-sm whitespace-nowrap sm:gap-2 -top-6 opacity-70">
+      <span className="absolute left-0 flex items-center gap-0 text-sm whitespace-nowrap sm:gap-2 -top-6 opacity-70">
         <PiLineVerticalLight className="-mx-2" size={20} />
         <PiLineVerticalLight size={20} />
         <DateCoord {...metadata.date.coords.lat} />
@@ -152,6 +152,26 @@ const VerticalImage = ({ image }: { image: string }) => {
         <DateCoord {...metadata.date.coords.long} />
         <PiLineVerticalLight size={20} />
       </span>
+
+      {/* other meta */}
+      <div className="[writing-mode:vertical-rl] -right-4 sm:gap-0 gap-1 sm:-right-8 absolute top-0 flex sm:flex-col font-sans text-xs font-light whitespace-nowrap">
+        <span className="relative flex gap-1 md:flex-row md:items-center md:gap-1 opacity-70">
+          Color space:
+          <span className="italic font-iwata">{metadata.colorSpace}.</span>
+          Color profile:
+          <span className="italic font-iwata">{metadata.colorProfile}.</span>
+          Focal length:
+          <span className="italic font-iwata">{metadata.focalLength}.</span>
+        </span>
+        <span className="relative flex gap-1 md:flex-row md:items-center md:gap-1 opacity-70">
+          Metering mode:
+          <span className="italic font-iwata">{metadata.meteringMode}.</span>F
+          number:
+          <span className="italic font-iwata">{metadata.fNumber}.</span>
+          Exposure time:
+          <span className="italic font-iwata">{metadata.exposureTime}.</span>
+        </span>
+      </div>
     </div>
   );
 };

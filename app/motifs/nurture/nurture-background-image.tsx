@@ -105,8 +105,8 @@ const SplitHorizontalImage = ({ image }: { image: string }) => {
           <PiLineVerticalLight size={20} />
         </span>
       </span>
-      <div className="relative flex flex-col font-sans font-light bottom-13">
-        <span className="text-xs relative right-[-53%] flex flex-col md:flex-row md:items-center gap-0 md:gap-1 opacity-70">
+      <div className="relative flex flex-col font-sans text-xs font-light bottom-13">
+        <span className="relative right-[-53%] flex flex-col md:flex-row md:items-center gap-0 md:gap-1 opacity-70">
           Color space:{" "}
           <span className="italic font-iwata">{metadata.colorSpace}.</span>
           Color profile:{" "}
@@ -114,7 +114,7 @@ const SplitHorizontalImage = ({ image }: { image: string }) => {
           Focal length:{" "}
           <span className="italic font-iwata">{metadata.focalLength}.</span>
         </span>
-        <span className="text-xs relative right-[-53%] flex flex-col md:flex-row md:items-center gap-0 md:gap-1 opacity-70">
+        <span className="relative right-[-53%] flex flex-col md:flex-row md:items-center gap-0 md:gap-1 opacity-70">
           Metering mode:{" "}
           <span className="italic font-iwata">{metadata.meteringMode}.</span>F
           number: <span className="italic font-iwata">{metadata.fNumber}.</span>

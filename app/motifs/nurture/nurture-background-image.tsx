@@ -7,9 +7,9 @@ import { useTheme } from "next-themes";
 import { PiLineVerticalLight } from "react-icons/pi";
 
 const HORIZONTAL_POSITION =
-  "text-sm bg-center absolute right-0 top-[45vh] bottom-[20vh] w-[clamp(58vw,75vw,900px)] bg-no-repeat bg-cover";
+  "bg-center absolute right-0 top-[45vh] bottom-[20vh] w-[clamp(58vw,75vw,900px)] bg-no-repeat bg-cover";
 const VERTICAL_POSITION =
-  "text-sm bg-top-left absolute right-[5vw] top-[35vh] h-[65vh] w-[clamp(55vw,70vw,600px)] bg-no-repeat bg-cover md:right-[12vw] md:left-[45vw] md:bottom-0 md:top-[35vh] md:h-auto md:w-auto";
+  "bg-top-left absolute right-[5vw] top-[35vh] h-[65vh] w-[clamp(55vw,70vw,600px)] bg-no-repeat bg-cover md:right-[12vw] md:left-[45vw] md:bottom-0 md:top-[35vh] md:h-auto md:w-auto";
 
 import imageMetadata from "./image-metadata.json" with { type: "json" };
 
@@ -38,7 +38,7 @@ const VERTICAL_IMAGES: string[] = [
   "1689",
 ];
 
-interface ImageMetadata {
+type ImageMetadata = {
   date: {
     coords: {
       lat: {
@@ -55,7 +55,13 @@ interface ImageMetadata {
       };
     };
   };
-}
+  meteringMode: string;
+  fNumber: string;
+  exposureTime: string;
+  colorSpace: string;
+  colorProfile: string;
+  focalLength: string;
+};
 
 interface DateCoordProps {
   d: string;
@@ -73,14 +79,18 @@ const DateCoord: FC<DateCoordProps> = ({ d, m, s, direction }) => {
 
 const SplitHorizontalImage = ({ image }: { image: string }) => {
   const url = getImageUrl(image, "horizontal");
-  const metadata = (imageMetadata as Record<string, ImageMetadata>)[image];
+  const metadata = (imageMetadata as unknown as Record<string, ImageMetadata>)[
+    image
+  ];
+  console.log(metadata);
   return (
     <div
       className={HORIZONTAL_POSITION}
       style={{ backgroundImage: `url("${url}")` }}
     >
       <div className="absolute w-[23%] h-full bg-background ml-[30%]" />
-      <span className="relative right-[-53%] flex flex-col md:flex-row md:items-center gap-0 md:gap-1 top-76 opacity-70">
+      {/* date coords */}
+      <span className="text-sm relative right-[-53%] flex flex-col md:flex-row md:items-center gap-0 md:gap-1 top-76 opacity-70">
         <span className="flex items-center gap-0 md:gap-1">
           <PiLineVerticalLight className="-mx-2.25" size={20} />
           <PiLineVerticalLight size={20} />
@@ -95,20 +105,40 @@ const SplitHorizontalImage = ({ image }: { image: string }) => {
           <PiLineVerticalLight size={20} />
         </span>
       </span>
+      <div className="relative flex flex-col font-sans font-light bottom-13">
+        <span className="text-xs relative right-[-53%] flex flex-col md:flex-row md:items-center gap-0 md:gap-1 opacity-70">
+          Color space:{" "}
+          <span className="italic font-iwata">{metadata.colorSpace}.</span>
+          Color profile:{" "}
+          <span className="italic font-iwata">{metadata.colorProfile}.</span>
+          Focal length:{" "}
+          <span className="italic font-iwata">{metadata.focalLength}.</span>
+        </span>
+        <span className="text-xs relative right-[-53%] flex flex-col md:flex-row md:items-center gap-0 md:gap-1 opacity-70">
+          Metering mode:{" "}
+          <span className="italic font-iwata">{metadata.meteringMode}.</span>F
+          number: <span className="italic font-iwata">{metadata.fNumber}.</span>
+          Exposure time:{" "}
+          <span className="italic font-iwata">{metadata.exposureTime}.</span>
+        </span>
+      </div>
     </div>
   );
 };
 
 const VerticalImage = ({ image }: { image: string }) => {
   const url = getImageUrl(image, "vertical");
-  const metadata = (imageMetadata as Record<string, ImageMetadata>)[image];
+  const metadata = (imageMetadata as unknown as Record<string, ImageMetadata>)[
+    image
+  ];
 
   return (
     <div
       className={VERTICAL_POSITION}
       style={{ backgroundImage: `url("${url}")` }}
     >
-      <span className="relative left-0 flex items-center gap-0 whitespace-nowrap sm:gap-2 -top-6 opacity-70">
+      {/* date coords */}
+      <span className="relative left-0 flex items-center gap-0 text-sm whitespace-nowrap sm:gap-2 -top-6 opacity-70">
         <PiLineVerticalLight className="-mx-2" size={20} />
         <PiLineVerticalLight size={20} />
         <DateCoord {...metadata.date.coords.lat} />

@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
-import { useEffect, useRef, useState, type FC } from "react";
+import { useEffect, useState, type FC, type ReactNode } from "react";
 import { useTheme } from "next-themes";
 import { PiLineVerticalLight } from "react-icons/pi";
 
@@ -35,8 +35,12 @@ const HORIZONTAL_POSITION =
 const VERTICAL_POSITION =
   "bg-top-left absolute right-[5vw] top-[35vh] h-[65vh] w-[clamp(55vw,70vw,600px)] bg-no-repeat bg-cover md:right-[12vw] md:left-[45vw] md:bottom-0 md:top-[35vh] md:h-auto md:w-auto";
 
-const getImageUrl = (imageNumber: string, orientation: string): string =>
-  `/cameraroll/${orientation}/IMG_${imageNumber}.webp`;
+type ImageOrientation = "horizontal" | "vertical";
+
+const getImageUrl = (
+  imageNumber: string,
+  orientation: ImageOrientation,
+): string => `/cameraroll/${orientation}/IMG_${imageNumber}.webp`;
 
 type ImageMetadata = {
   date: {
@@ -80,21 +84,31 @@ const DateCoord: FC<DateCoordProps> = ({ d, m, s, direction }) => {
   );
 };
 
-const BackgroundImage = ({
-  className,
-  url,
-  children,
-}: {
+interface BackgroundImageProps {
   className: string;
   url: string;
   children: React.ReactNode;
+}
+
+const BackgroundImage: FC<BackgroundImageProps> = ({
+  className,
+  url,
+  children,
 }) => (
   <div className={className} style={{ backgroundImage: `url("${url}")` }}>
     {children}
   </div>
 );
 
-const SplitHorizontalImage = ({ image }: { image: string }) => {
+const ImageValue = ({ children }: { children: ReactNode }) => (
+  <span className="italic font-iwata">{children}.</span>
+);
+
+interface ImageProps {
+  image: string;
+}
+
+const SplitHorizontalImage: FC<ImageProps> = ({ image }) => {
   const url = getImageUrl(image, "horizontal");
   const metadata = getMetadata(image);
 
@@ -138,7 +152,7 @@ const SplitHorizontalImage = ({ image }: { image: string }) => {
   );
 };
 
-const VerticalImage = ({ image }: { image: string }) => {
+const VerticalImage: FC<ImageProps> = ({ image }) => {
   const url = getImageUrl(image, "vertical");
   const metadata = getMetadata(image);
 
@@ -162,7 +176,7 @@ const VerticalImage = ({ image }: { image: string }) => {
           Focal length: <ImageValue>{metadata.focalLength}</ImageValue>
         </span>
         <span className="relative flex gap-1 md:flex-row md:items-center md:gap-1 opacity-70">
-          Metering mode: <ImageValue>{metadata.meteringMode}</ImageValue>F
+          Metering mode: <ImageValue>{metadata.meteringMode}</ImageValue> F
           number: <ImageValue>{metadata.fNumber}</ImageValue>
           Exposure time: <ImageValue>{metadata.exposureTime}</ImageValue>
         </span>
@@ -171,7 +185,10 @@ const VerticalImage = ({ image }: { image: string }) => {
   );
 };
 
-const getRandomImage = (orientation: string, currentImage: string) => {
+const getRandomImage = (
+  orientation: ImageOrientation,
+  currentImage: string,
+) => {
   const availableHorizontalImages = HORIZONTAL_IMAGES.filter(
     (img) => img !== currentImage,
   );
@@ -189,20 +206,10 @@ const getRandomImage = (orientation: string, currentImage: string) => {
     : availableVerticalImages[index];
 };
 
-type ImageOrientation = "horizontal" | "vertical";
-
-interface ImageProps {
-  image: string;
-}
-
-const ImageValue = ({ children }: { children: React.ReactNode }) => (
-  <span className="italic font-iwata">{children}.</span>
-);
-
 export const NurtureBackgroundImage = () => {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState<boolean>(false);
-  const [orientation, setOrientation] = useState<string>(() =>
+  const [orientation, setOrientation] = useState<ImageOrientation>(() =>
     Math.random() < 0.5 ? "horizontal" : "vertical",
   );
 

@@ -80,15 +80,26 @@ const DateCoord: FC<DateCoordProps> = ({ d, m, s, direction }) => {
   );
 };
 
+const BackgroundImage = ({
+  className,
+  url,
+  children,
+}: {
+  className: string;
+  url: string;
+  children: React.ReactNode;
+}) => (
+  <div className={className} style={{ backgroundImage: `url("${url}")` }}>
+    {children}
+  </div>
+);
+
 const SplitHorizontalImage = ({ image }: { image: string }) => {
   const url = getImageUrl(image, "horizontal");
   const metadata = getMetadata(image);
 
   return (
-    <div
-      className={HORIZONTAL_POSITION}
-      style={{ backgroundImage: `url("${url}")` }}
-    >
+    <BackgroundImage className={HORIZONTAL_POSITION} url={url}>
       <div className="absolute w-[23%] h-full bg-background ml-[30%]" />
       {/* date coords */}
       <span className="text-sm relative left-[53%] flex flex-col-reverse md:flex-row-reverse md:justify-end md:items-center gap-0 md:gap-1 top-76 opacity-70">
@@ -123,7 +134,7 @@ const SplitHorizontalImage = ({ image }: { image: string }) => {
           Exposure time: <ImageValue>{metadata.exposureTime}</ImageValue>
         </span>
       </div>
-    </div>
+    </BackgroundImage>
   );
 };
 
@@ -132,10 +143,7 @@ const VerticalImage = ({ image }: { image: string }) => {
   const metadata = getMetadata(image);
 
   return (
-    <div
-      className={VERTICAL_POSITION}
-      style={{ backgroundImage: `url("${url}")` }}
-    >
+    <BackgroundImage className={VERTICAL_POSITION} url={url}>
       {/* date coords */}
       <span className="absolute left-0 flex items-center gap-0 text-sm whitespace-nowrap sm:gap-2 -top-6 opacity-70">
         <PiLineVerticalLight className="-mx-2" size={20} />
@@ -159,7 +167,7 @@ const VerticalImage = ({ image }: { image: string }) => {
           Exposure time: <ImageValue>{metadata.exposureTime}</ImageValue>
         </span>
       </div>
-    </div>
+    </BackgroundImage>
   );
 };
 

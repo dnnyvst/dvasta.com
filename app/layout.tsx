@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { ThemeProvider } from "next-themes";
 import { Aside, Header, MainCanvas } from "@/components";
-import { NurtureBackgroundImage } from "@/motifs";
+import { NurtureBackgroundImage, ParannoulBackground } from "@/motifs";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -51,6 +51,7 @@ export default function RootLayout({
           </div>
           <MainCanvas />
           <NurtureBackgroundImage />
+          <ParannoulBackground />
         </ThemeProvider>
       </body>
     </html>

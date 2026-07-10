@@ -29,10 +29,9 @@ const VERTICAL_IMAGES: string[] = [
   "1689",
 ];
 
-const HORIZONTAL_POSITION =
-  "bg-center absolute right-0 top-[45vh] bottom-[20vh] w-[clamp(58vw,75vw,900px)] bg-no-repeat bg-cover overflow-x-clip";
-const VERTICAL_POSITION =
-  "bg-top-left absolute right-[5vw] top-[35vh] h-[65vh] w-[clamp(55vw,70vw,600px)] bg-no-repeat bg-cover md:right-[12vw] md:left-[45vw] md:bottom-0 md:top-[35vh] md:h-auto md:w-auto";
+const BASE_IMAGE = "absolute bg-center bg-no-repeat bg-cover";
+const HORIZONTAL_POSITION = `${BASE_IMAGE} right-0 top-[45vh] bottom-[20vh] w-[clamp(58vw,75vw,900px)] overflow-x-clip`;
+const VERTICAL_POSITION = `${BASE_IMAGE} right-[5vw] top-[35vh] bottom-0 w-[clamp(55vw,70vw,600px)] h-[65vh] md:left-[45vw] md:right-[12vw] md:top-[35vh] md:h-auto md:w-auto`;
 
 type ImageOrientation = "horizontal" | "vertical";
 

@@ -1,42 +1,124 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FC } from "react";
 import { useTheme } from "next-themes";
+import { PiLineVerticalLight } from "react-icons/pi";
 
 const HORIZONTAL_POSITION =
   "bg-center absolute right-0 top-[45vh] bottom-[20vh] w-[clamp(58vw,75vw,900px)] bg-no-repeat bg-cover";
 const VERTICAL_POSITION =
-  "bg-top-left absolute right-[5vw] top-[35vh] h-[65vh] w-[clamp(55vw,70vw,600px)] bg-no-repeat bg-cover md:right-[20vw] md:left-[45vw] md:bottom-0 md:top-[35vh] md:h-auto md:w-auto";
+  "bg-top-left absolute right-[5vw] top-[35vh] h-[65vh] w-[clamp(55vw,70vw,600px)] bg-no-repeat bg-cover md:right-[12vw] md:left-[45vw] md:bottom-0 md:top-[35vh] md:h-auto md:w-auto";
 
-const getImageUrls = (imgNumbers: string[], orientation: string): string[] =>
-  imgNumbers.map((number) => `/cameraroll/${orientation}/IMG_${number}.webp`);
+import imageMetadata from "./image-metadata.json" with { type: "json" };
 
-const HORIZONTAL_IMAGES: string[] = getImageUrls(
-  ["1093", "2111", "2235", "7549", "7624", "8126", "8288"],
-  "horizontal",
-);
+const getImageUrl = (imageNumber: string, orientation: string): string =>
+  `/cameraroll/${orientation}/IMG_${imageNumber}.webp`;
 
-const VERTICAL_IMAGES: string[] = getImageUrls(
-  ["0391", "1028", "8119", "8165", "8175", "8193", "8287", "1665", "1689"],
-  "vertical",
-);
+const HORIZONTAL_IMAGES: string[] = [
+  "1093",
+  "2111",
+  "2235",
+  "7549",
+  "7624",
+  "8126",
+  "8288",
+];
 
-const SplitHorizontalImage = ({ url }: { url: string }) => (
-  <div
-    className={HORIZONTAL_POSITION}
-    style={{ backgroundImage: `url("${url}")` }}
-  >
-    <div className="absolute w-[23%] h-full bg-background ml-[30%]" />
-  </div>
-);
+const VERTICAL_IMAGES: string[] = [
+  "0391",
+  "1028",
+  "8119",
+  "8165",
+  "8175",
+  "8193",
+  "8287",
+  "1665",
+  "1689",
+];
 
-const VerticalImage = ({ url }: { url: string }) => (
-  <div
-    className={VERTICAL_POSITION}
-    style={{ backgroundImage: `url("${url}")` }}
-  />
-);
+interface ImageMetadata {
+  date: {
+    coords: {
+      lat: {
+        d: string;
+        m: string;
+        s: string;
+        direction: string;
+      };
+      long: {
+        d: string;
+        m: string;
+        s: string;
+        direction: string;
+      };
+    };
+  };
+}
+
+interface DateCoordProps {
+  d: string;
+  m: string;
+  s: string;
+  direction: string;
+}
+const DateCoord: FC<DateCoordProps> = ({ d, m, s, direction }) => {
+  return (
+    <span className="flex gap-1">
+      {d}° {m}&apos; {s}&quot;<span className="italic">({direction})</span>
+    </span>
+  );
+};
+
+const SplitHorizontalImage = ({ image }: { image: string }) => {
+  const url = getImageUrl(image, "horizontal");
+  const metadata = (imageMetadata as Record<string, ImageMetadata>)[image];
+  return (
+    <div
+      className={HORIZONTAL_POSITION}
+      style={{ backgroundImage: `url("${url}")` }}
+    >
+      <div className="absolute w-[23%] h-full bg-background ml-[30%]" />
+      <span className="relative right-[-53%] flex flex-col lg:flex-row lg:items-center gap-0 lg:gap-1 top-78 opacity-70">
+        <span className="flex items-center gap-0 lg:gap-1">
+          <PiLineVerticalLight className="-mx-2.5" size={24} />
+          <PiLineVerticalLight size={24} />
+          <DateCoord {...metadata.date.coords.lat} />
+        </span>
+        <span className="flex gap-0 lg:gap-1">
+          <PiLineVerticalLight
+            size={24}
+            className="-mx-2.5 mr-3 lg:mr-0 lg:mx-auto"
+          />
+          <DateCoord {...metadata.date.coords.long} />
+          <PiLineVerticalLight size={24} />
+        </span>
+      </span>
+    </div>
+  );
+};
+
+const VerticalImage = ({ image }: { image: string }) => {
+  const url = getImageUrl(image, "vertical");
+  const metadata = (imageMetadata as Record<string, ImageMetadata>)[image];
+
+  return (
+    <div
+      className={VERTICAL_POSITION}
+      style={{ backgroundImage: `url("${url}")` }}
+    >
+      <span className="relative left-0 flex items-center gap-1 sm:gap-2 md:gap-0 -top-8 opacity-70">
+        <PiLineVerticalLight className="-mx-2.5" size={24} />
+        <PiLineVerticalLight size={24} />
+        <DateCoord {...metadata.date.coords.lat} />
+        <PiLineVerticalLight size={24} />
+        <DateCoord {...metadata.date.coords.long} />
+        <PiLineVerticalLight size={24} />
+      </span>
+    </div>
+  );
+};
 
 const getRandomImage = (orientation: string) => {
   const maxLength =
@@ -72,9 +154,9 @@ export const NurtureBackgroundImage = () => {
   return (
     <>
       {orientation === "horizontal" ? (
-        <SplitHorizontalImage url={image} />
+        <SplitHorizontalImage image={image} />
       ) : (
-        <VerticalImage url={image} />
+        <VerticalImage image={image} />
       )}
     </>
   );

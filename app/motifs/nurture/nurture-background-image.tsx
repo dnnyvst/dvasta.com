@@ -7,7 +7,7 @@ import { useTheme } from "next-themes";
 import { PiLineVerticalLight } from "react-icons/pi";
 
 const HORIZONTAL_POSITION =
-  "bg-center absolute right-0 top-[45vh] bottom-[20vh] w-[clamp(58vw,75vw,900px)] bg-no-repeat bg-cover";
+  "bg-center absolute right-0 top-[45vh] bottom-[20vh] w-[clamp(58vw,75vw,900px)] bg-no-repeat bg-cover overflow-x-clip";
 const VERTICAL_POSITION =
   "bg-top-left absolute right-[5vw] top-[35vh] h-[65vh] w-[clamp(55vw,70vw,600px)] bg-no-repeat bg-cover md:right-[12vw] md:left-[45vw] md:bottom-0 md:top-[35vh] md:h-auto md:w-auto";
 
@@ -90,12 +90,7 @@ const SplitHorizontalImage = ({ image }: { image: string }) => {
     >
       <div className="absolute w-[23%] h-full bg-background ml-[30%]" />
       {/* date coords */}
-      <span className="text-sm relative right-[-53%] flex flex-col md:flex-row md:items-center gap-0 md:gap-1 top-76 opacity-70">
-        <span className="flex items-center gap-0 md:gap-1">
-          <PiLineVerticalLight className="-mx-2.25" size={20} />
-          <PiLineVerticalLight size={20} />
-          <DateCoord {...metadata.date.coords.lat} />
-        </span>
+      <span className="text-sm relative left-[53%] flex flex-col-reverse md:flex-row-reverse md:justify-end md:items-center gap-0 md:gap-1 top-76 opacity-70">
         <span className="flex gap-0 md:gap-1">
           <PiLineVerticalLight
             size={20}
@@ -104,21 +99,32 @@ const SplitHorizontalImage = ({ image }: { image: string }) => {
           <DateCoord {...metadata.date.coords.long} />
           <PiLineVerticalLight size={20} />
         </span>
+        <span className="flex items-center gap-0 md:gap-1">
+          <PiLineVerticalLight className="-mx-2.25" size={20} />
+          <PiLineVerticalLight size={20} />
+          <DateCoord {...metadata.date.coords.lat} />
+        </span>
       </span>
-      <div className="relative flex flex-col font-sans text-xs font-light bottom-13">
-        <span className="relative right-[-53%] flex flex-col md:flex-row md:items-center gap-0 md:gap-1 opacity-70">
-          Color space:{" "}
-          <span className="italic font-iwata">{metadata.colorSpace}.</span>
-          Color profile:{" "}
-          <span className="italic font-iwata">{metadata.colorProfile}.</span>
-          Focal length:{" "}
+      {/* other meta */}
+      <div className="whitespace-nowrap relative left-[53%] flex flex-col font-sans text-xs font-light bottom-18 md:bottom-13">
+        <span className="relative flex gap-1 md:flex-row md:items-center md:gap-1 opacity-70">
+          <span className="hidden gap-1 sm:flex">
+            Color space:
+            <span className="italic font-iwata">{metadata.colorSpace}.</span>
+            Color profile:
+            <span className="italic font-iwata">{metadata.colorProfile}.</span>
+          </span>
+          Focal length:
           <span className="italic font-iwata">{metadata.focalLength}.</span>
         </span>
-        <span className="relative right-[-53%] flex flex-col md:flex-row md:items-center gap-0 md:gap-1 opacity-70">
-          Metering mode:{" "}
-          <span className="italic font-iwata">{metadata.meteringMode}.</span>F
-          number: <span className="italic font-iwata">{metadata.fNumber}.</span>
-          Exposure time:{" "}
+        <span className="relative flex gap-1 md:flex-row md:items-center md:gap-1 opacity-70">
+          <span className="hidden gap-1 sm:flex">
+            Metering mode:
+            <span className="italic font-iwata">{metadata.meteringMode}.</span>
+          </span>
+          F number:
+          <span className="italic font-iwata">{metadata.fNumber}.</span>
+          Exposure time:
           <span className="italic font-iwata">{metadata.exposureTime}.</span>
         </span>
       </div>

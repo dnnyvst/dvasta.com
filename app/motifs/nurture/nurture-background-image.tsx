@@ -87,7 +87,7 @@ const DateCoord: FC<DateCoordProps> = ({ d, m, s, direction }) => {
 interface BackgroundImageProps {
   className: string;
   url: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const BackgroundImage: FC<BackgroundImageProps> = ({
@@ -189,21 +189,12 @@ const getRandomImage = (
   orientation: ImageOrientation,
   currentImage: string,
 ) => {
-  const availableHorizontalImages = HORIZONTAL_IMAGES.filter(
-    (img) => img !== currentImage,
-  );
-  const availableVerticalImages = VERTICAL_IMAGES.filter(
-    (img) => img !== currentImage,
-  );
-  const maxLength =
-    orientation === "horizontal"
-      ? availableHorizontalImages.length
-      : availableVerticalImages.length;
-  const index = Math.floor(Math.random() * maxLength);
+  const images =
+    orientation === "horizontal" ? HORIZONTAL_IMAGES : VERTICAL_IMAGES;
 
-  return orientation === "horizontal"
-    ? availableHorizontalImages[index]
-    : availableVerticalImages[index];
+  const availableImages = images.filter((img) => img !== currentImage);
+
+  return availableImages[Math.floor(Math.random() * availableImages.length)];
 };
 
 export const NurtureBackgroundImage = () => {
@@ -230,13 +221,9 @@ export const NurtureBackgroundImage = () => {
 
   if (!mounted || !resolvedTheme?.includes("nurture") || !image) return null;
 
-  return (
-    <>
-      {orientation === "horizontal" ? (
-        <SplitHorizontalImage image={image} />
-      ) : (
-        <VerticalImage image={image} />
-      )}
-    </>
+  return orientation === "horizontal" ? (
+    <SplitHorizontalImage image={image} />
+  ) : (
+    <VerticalImage image={image} />
   );
 };

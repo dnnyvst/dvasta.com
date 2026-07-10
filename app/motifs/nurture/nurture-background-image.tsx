@@ -115,7 +115,7 @@ const SplitHorizontalImage: FC<ImageProps> = ({ image }) => {
     <BackgroundImage className={HORIZONTAL_POSITION} url={url}>
       <div className="absolute w-[23%] h-full bg-background ml-[30%]" />
       {/* date coords */}
-      <span className="text-sm relative left-[53%] flex flex-col-reverse md:flex-row-reverse md:justify-end md:items-center gap-0 md:gap-1 top-65 xs:top-76 opacity-70">
+      <span className="text-sm absolute left-[53%] flex flex-col-reverse md:flex-row-reverse md:justify-end md:items-center gap-1 -bottom-11 md:-bottom-6 opacity-70 whitespace-nowrap">
         <span className="flex gap-0 md:gap-1">
           <PiLineVerticalLight
             size={20}
@@ -131,7 +131,7 @@ const SplitHorizontalImage: FC<ImageProps> = ({ image }) => {
         </span>
       </span>
       {/* other meta */}
-      <div className="whitespace-nowrap relative left-[53%] flex flex-col font-sans text-xs font-light bottom-18 md:bottom-13">
+      <div className="whitespace-nowrap relative left-[53%] flex flex-col font-sans text-xs font-light -top-8">
         <span className="relative flex gap-1 md:flex-row md:items-center md:gap-1 opacity-70">
           <span className="hidden gap-1 sm:flex">
             Color space: <ImageValue>{metadata.colorSpace}</ImageValue>

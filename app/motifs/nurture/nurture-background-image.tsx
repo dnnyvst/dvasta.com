@@ -31,7 +31,7 @@ const VERTICAL_IMAGES: string[] = [
 
 const BASE_IMAGE = "absolute bg-center bg-no-repeat bg-cover";
 const HORIZONTAL_POSITION = `${BASE_IMAGE} right-0 top-[45vh] bottom-[20vh] w-[clamp(58vw,75vw,900px)] overflow-x-clip`;
-const VERTICAL_POSITION = `${BASE_IMAGE} right-[5vw] bottom-[5vh] top-[30vh] md:top-[20vh] left-[35vw] md:left-[55vw] w-auto `;
+const VERTICAL_POSITION = `${BASE_IMAGE} right-[5vw] bottom-[3vh] top-[30vh] md:top-[25vh] left-[35vw] sm:left-[45vw] lg:left-[60vw] w-auto`;
 
 type ImageOrientation = "horizontal" | "vertical";
 

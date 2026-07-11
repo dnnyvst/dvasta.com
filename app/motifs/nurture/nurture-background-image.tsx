@@ -31,7 +31,7 @@ const VERTICAL_IMAGES: string[] = [
 
 const BASE_IMAGE = "absolute bg-center bg-no-repeat bg-cover";
 const HORIZONTAL_POSITION = `${BASE_IMAGE} right-0 top-[45vh] bottom-[20vh] w-[clamp(58vw,75vw,900px)] overflow-x-clip`;
-const VERTICAL_POSITION = `${BASE_IMAGE} right-[5vw] top-[35vh] bottom-0 w-[clamp(55vw,70vw,600px)] h-[65vh] md:left-[45vw] md:right-[12vw] md:top-[35vh] md:h-auto md:w-auto`;
+const VERTICAL_POSITION = `${BASE_IMAGE} right-[5vw] bottom-[5vh] top-[30vh] md:top-[20vh] left-[35vw] md:left-[55vw] w-auto `;
 
 type ImageOrientation = "horizontal" | "vertical";
 
@@ -167,7 +167,7 @@ const VerticalImage: FC<ImageProps> = ({ image }) => {
       </span>
 
       {/* other meta */}
-      <div className="[writing-mode:vertical-rl] -right-4 sm:gap-0 gap-1 sm:-right-8 absolute top-0 flex sm:flex-col font-sans text-xs font-light whitespace-nowrap">
+      <div className="[writing-mode:vertical-rl] -right-4 sm:gap-0 gap-1 sm:-right-8 absolute top-0 flex sm:flex-col font-sans text-xs font-light whitespace-nowrap h-full overflow-clip">
         <span className="relative flex gap-1 md:flex-row md:items-center md:gap-1 opacity-70">
           Color space: <ImageValue>{metadata.colorSpace}</ImageValue>
           Color profile: <ImageValue>{metadata.colorProfile}</ImageValue>
@@ -195,20 +195,22 @@ const getRandomImage = (
   return availableImages[Math.floor(Math.random() * availableImages.length)];
 };
 
+const getRandomOrientation = (): ImageOrientation =>
+  Math.random() < 0.5 ? "horizontal" : "vertical";
+
 export const NurtureBackgroundImage = () => {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState<boolean>(false);
-  const [orientation, setOrientation] = useState<ImageOrientation>(() =>
-    Math.random() < 0.5 ? "horizontal" : "vertical",
+  const [orientation, setOrientation] = useState<ImageOrientation>(
+    getRandomOrientation(),
   );
-
   const [image, setImage] = useState<string>("");
 
   useEffect(() => {
     setMounted(true);
 
     const changeImage = () => {
-      const newOrientation = Math.random() < 0.5 ? "horizontal" : "vertical";
+      const newOrientation = getRandomOrientation();
       setOrientation(newOrientation);
       setImage(getRandomImage(newOrientation, image));
     };
